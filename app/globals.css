@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-heading: var(--font-sans);
+  --smvitm-maroon:       #8B1A3A;
+  --smvitm-maroon-dark:  #6B1228;
+  --smvitm-maroon-light: #B5294F;
+  --smvitm-gold:         #C9962C;
+  --smvitm-gold-light:   #E8B84B;
+  --smvitm-bg:           #F5F3EF;
+  --smvitm-surface:      #FFFFFF;
+  --smvitm-border:       #E2D9CE;
+  --smvitm-text:         #18181B;
+  --smvitm-text-secondary: #6B5F57;
+  --smvitm-success:      #1A7A4A;
+  --smvitm-warning:      #C9962C;
+  --smvitm-error:        #B91C1C;
+
+  /* shadcn/ui compat */
+  --background: 38 43% 97%;
+  --foreground: 0 0% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 10%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 10%;
+  --primary: 340 67% 32%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 38 27% 95%;
+  --secondary-foreground: 0 0% 10%;
+  --muted: 38 27% 95%;
+  --muted-foreground: 24 9% 40%;
+  --accent: 38 57% 48%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 3 66% 47%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 35 30% 88%;
+  --input: 35 30% 88%;
+  --ring: 340 67% 32%;
+  --radius: 0.75rem;
+}
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-smvitm-bg text-smvitm-text;
+    font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+/* ─── Custom scrollbar ─── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--smvitm-bg); }
+::-webkit-scrollbar-thumb { background: #C9A0AA; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--smvitm-maroon); }
+
+/* ─── Focus ring ─── */
+:focus-visible {
+  outline: 2px solid var(--smvitm-maroon);
+  outline-offset: 2px;
+}
+
+/* ─── Selection ─── */
+::selection {
+  background: #f0d0d8;
+  color: #7B1436;
+}
+
+.font-heading, .font-display {
+  font-family: var(--font-heading), system-ui, sans-serif;
+  letter-spacing: -0.012em;
+}
+
+/* ─── Warm Shimmer Animation for Skeleton Loaders ─── */
+@keyframes shimmerWarm {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, #EFE7DA 0%, #FCF9F3 50%, #EFE7DA 100%);
+  background-size: 200% 100%;
+  animation: shimmerWarm 1.6s ease-in-out infinite;
+}
+
+.bg-radial-warm {
+  background: radial-gradient(1000px 500px at 10% -20%, rgba(197, 144, 72, 0.15), transparent),
+              radial-gradient(800px 400px at 100% 0%, rgba(123, 20, 54, 0.08), transparent);
+}
+
+@keyframes dossierCascade {
+  0% {
+    opacity: 0;
+    transform: translateX(-28px) translateY(6px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+  }
+}
+
+.animate-dossier-cascade {
+  animation: dossierCascade 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ─── GSAP-Level Silky Smooth Card Physics Animations ─── */
+@keyframes cardFlyIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(-90px, 0, 0) scale(0.90);
+    filter: blur(4px);
+  }
+  65% {
+    opacity: 1;
+    transform: translate3d(8px, 0, 0) scale(1.015);
+    filter: blur(0px);
+  }
+  85% {
+    transform: translate3d(-2px, 0, 0) scale(0.998);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0px);
+  }
+}
+
+@keyframes cardFlyOut {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-95px, 12px, 0) scale(0.88);
+    filter: blur(3px);
+  }
+}
+
+.animate-card-fly-in {
+  animation: cardFlyIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform, opacity, filter;
+  backface-visibility: hidden;
+}
+
+.animate-card-fly-out {
+  animation: cardFlyOut 0.32s cubic-bezier(0.4, 0, 0.2, 1) both;
+  will-change: transform, opacity, filter;
+  backface-visibility: hidden;
+}
+
+@keyframes iconPulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(197, 144, 72, 0.45);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(197, 144, 72, 0);
+    transform: scale(1.05);
+  }
+}
+
+.animate-icon-pulse {
+  animation: iconPulseGlow 2.4s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.animate-gentle-float {
+  animation: gentleFloat 3s ease-in-out infinite;
+}
+
+

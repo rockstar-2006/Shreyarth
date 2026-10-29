@@ -1,0 +1,82 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function getUserRole() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && getUserRole() == 'admin';
+    }
+
+    function isSWBMember() {
+      return isAuthenticated() && getUserRole() == 'swb_member';
+    }
+
+    function isStudent() {
+      return isAuthenticated() && getUserRole() == 'student';
+    }
+
+    function isOwner(uid) {
+      return isAuthenticated() && request.auth.uid == uid;
+    }
+
+    // ─── users ───────────────────────────────────────────────────
+    match /users/{uid} {
+      // Owner can read their own doc; admin can read all
+      allow read: if isOwner(uid) || isAdmin();
+      // Only admin can create/update user profiles (after Auth account is created)
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ─── scholarships ─────────────────────────────────────────────
+    match /scholarships/{scholarshipId} {
+      // Admin: full access
+      allow read, write: if isAdmin();
+      // SWB member: can read published, voting_open, closed
+      allow read: if isSWBMember() && resource.data.status in ['published', 'voting_open', 'closed'];
+      // Student: can read published, voting_open, closed
+      allow read: if isStudent() && resource.data.status in ['published', 'voting_open', 'closed'];
+    }
+
+    // ─── nominees ─────────────────────────────────────────────────
+    match /nominees/{nomineeId} {
+      // Admin: full access
+      allow read, write: if isAdmin();
+      // SWB member: can read nominees
+      allow read: if isSWBMember();
+      // Student: can read their own nomination
+      allow read: if isStudent() && resource.data.studentId == request.auth.uid;
+    }
+
+    // ─── votes ────────────────────────────────────────────────────
+    match /votes/{voteId} {
+      // Admin: can read all votes (for results)
+      allow read: if isAdmin();
+      // SWB member: can create/update their own vote (only if not yet submitted)
+      allow create: if isSWBMember() && request.resource.data.swbMemberId == request.auth.uid;
+      allow update: if isSWBMember()
+        && resource.data.swbMemberId == request.auth.uid
+        && resource.data.isSubmitted == false;
+      // Once submitted, no further updates
+      allow read: if isSWBMember() && resource.data.swbMemberId == request.auth.uid;
+    }
+
+    // ─── results ──────────────────────────────────────────────────
+    match /results/{scholarshipId} {
+      // Admin: can write results
+      allow write: if isAdmin();
+      // All authenticated users can read results
+      allow read: if isAuthenticated();
+    }
+  }
+}
