@@ -10,10 +10,8 @@ import {
   X, 
   ExternalLink, 
   ChevronRight,
-  GraduationCap,
-  Sparkles,
-  BookOpen,
-  FileSpreadsheet
+  FileSpreadsheet,
+  type LucideIcon
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
@@ -29,7 +27,7 @@ interface NavItem {
   kannadaLabel: string;
   categoryTag: string;
   description: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  icon: LucideIcon;
   badge?: string;
   isExternal?: boolean;
 }

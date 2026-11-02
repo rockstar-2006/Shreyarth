@@ -32,7 +32,6 @@ import {
   Copy, 
   Check, 
   Sparkles,
-  ArrowUpDown,
   GraduationCap,
   Award
 } from 'lucide-react';
@@ -102,7 +101,7 @@ export default function StudentDatabasePage() {
 
   // Filtered & Sorted Student list
   const filteredStudents = useMemo(() => {
-    let result = students.filter((s) => {
+    const result = students.filter((s) => {
       // Previous scholarship filter
       if (prevScholarshipFilter === 'received' && !s.hasReceivedPreviousYear) return false;
       if (prevScholarshipFilter === 'none' && s.hasReceivedPreviousYear) return false;
@@ -155,7 +154,7 @@ export default function StudentDatabasePage() {
         setPreviewRows(parsed);
         toast.success(`Detected ${parsed.length} student records from ${file.name}`);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
       toast.error('Failed to parse Excel file. Please ensure it has the correct columns.');
       setUploadFile(null);
@@ -175,7 +174,7 @@ export default function StudentDatabasePage() {
       setIsUploadModalOpen(false);
       setUploadFile(null);
       setPreviewRows([]);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
       toast.error('Error saving records to database. Please try again.');
     } finally {
@@ -277,6 +276,7 @@ export default function StudentDatabasePage() {
       toast.success(`Deleted record for ${deletingStudent.studentName}`);
       setDeletingStudent(null);
     } catch (err) {
+      console.error('Failed to delete student:', err);
       toast.error('Failed to delete student.');
     }
   };
@@ -288,6 +288,7 @@ export default function StudentDatabasePage() {
       toast.success('All student records cleared from database.');
       setIsClearAllModalOpen(false);
     } catch (err) {
+      console.error('Failed to clear student database:', err);
       toast.error('Failed to clear database.');
     }
   };
@@ -361,6 +362,7 @@ export default function StudentDatabasePage() {
       await saveStudentRecordsBulk(sampleRecords);
       toast.success('Loaded 5 sample student records!');
     } catch (err) {
+      console.error('Failed to seed demo student records:', err);
       toast.error('Failed to load sample records.');
     }
   };
@@ -566,7 +568,7 @@ export default function StudentDatabasePage() {
           <Filter size={15} className="text-smvitm-textMuted" />
           <select
             value={prevScholarshipFilter}
-            onChange={(e) => setPrevScholarshipFilter(e.target.value as any)}
+            onChange={(e) => setPrevScholarshipFilter(e.target.value as 'all' | 'received' | 'none')}
             className="px-3 py-2 bg-[#F9F7F4] border border-[#E2D9CE] rounded-lg text-xs font-medium text-smvitm-text focus:outline-none focus:ring-2 focus:ring-[#7B1436]"
           >
             <option value="all">All Previous Status</option>
@@ -593,7 +595,7 @@ export default function StudentDatabasePage() {
           {/* Sort By */}
           <select
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as any)}
+            onChange={(e) => setSortBy(e.target.value as 'slNo' | 'name' | 'incomeAsc' | 'incomeDesc')}
             className="px-3 py-2 bg-[#F9F7F4] border border-[#E2D9CE] rounded-lg text-xs font-medium text-smvitm-text focus:outline-none focus:ring-2 focus:ring-[#7B1436]"
           >
             <option value="slNo">Sort: Sl. No.</option>
@@ -895,7 +897,7 @@ export default function StudentDatabasePage() {
                   Sl.No. | Name of the Student | USN | Mobile No. | Caste | Income | Scholarships Received last previous year | Remarks
                 </div>
                 <p className="text-2xs text-[#7B1436]/80 leading-relaxed">
-                  • <em>Scholarships Received last previous year:</em> If blank or empty, system will automatically classify as <strong>"None (Not Received)"</strong>.
+                  • <em>Scholarships Received last previous year:</em> If blank or empty, system will automatically classify as <strong>&quot;None (Not Received)&quot;</strong>.
                   <br />• <em>USN:</em> Acts as the unique student identifier to avoid duplicates.
                 </p>
               </div>
@@ -1161,7 +1163,7 @@ export default function StudentDatabasePage() {
                   </div>
                 ) : (
                   <p className="text-2xs text-smvitm-textMuted pl-6">
-                    Will be stored as <strong>"None (Not Received)"</strong> in the database.
+                    Will be stored as <strong>&quot;None (Not Received)&quot;</strong> in the database.
                   </p>
                 )}
               </div>

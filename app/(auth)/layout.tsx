@@ -1,17 +1,13 @@
 import Link from 'next/link';
 import {
   GraduationCap,
-  Award,
-  ShieldCheck,
   CheckCircle2,
   TrendingUp,
   Sparkles,
   IndianRupee,
-  Building2,
   Lock,
   ArrowLeft,
   PhoneCall,
-  Clock,
 } from 'lucide-react';
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {

@@ -7,7 +7,7 @@ import { listNominees } from '@/lib/firebase/firestore/nominees';
 import { getVote, submitVote } from '@/lib/firebase/firestore/votes';
 import { useAuthContext } from '@/components/providers/AuthProvider';
 import { Scholarship, Nominee } from '@/types';
-import { Card, CardBody, CardHeader } from '@/components/ui/Card';
+import { Card, CardBody } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { TableSkeleton } from '@/components/ui/Skeleton';
 import { formatCurrency } from '@/lib/utils/formatters';
@@ -19,11 +19,9 @@ import {
   User, 
   CheckCircle2, 
   Sparkles, 
-  Building2, 
   FileText, 
   Star, 
   AlertCircle,
-  ThumbsUp,
   Save,
   GraduationCap,
   BookOpen,
@@ -55,19 +53,6 @@ function getPriorScholarshipInfo(nominee: Nominee): { isFirstTime: boolean; labe
     return { isFirstTime: true, label: 'First-Time Applicant (No Prior Scholarship)' };
   }
   return { isFirstTime: false, label: prev };
-}
-
-function getCleanRemarks(description?: string): string {
-  if (!description) return '';
-  if (description.includes('|')) {
-    const parts = description.split('|').map((p) => p.trim());
-    const lastPart = parts[parts.length - 1];
-    if (lastPart && lastPart !== '-' && lastPart !== '—' && !lastPart.startsWith('Income:') && !lastPart.startsWith('Prev:')) {
-      return lastPart;
-    }
-    return '';
-  }
-  return description;
 }
 
 export default function FacultyRatingPage() {
@@ -116,6 +101,11 @@ export default function FacultyRatingPage() {
   const isComplete = nominees.length > 0 && ratedCount === nominees.length;
 
   const handleSubmit = async () => {
+    if (!id) {
+      toast.error('Scholarship could not be identified.');
+      return;
+    }
+
     if (!user) {
       toast.error('You must be logged in to submit evaluations.');
       return;
@@ -297,8 +287,8 @@ export default function FacultyRatingPage() {
             const scoreInfo = currentRating > 0 ? getScoreLabel(currentRating) : null;
             const branchName = getResolvedBranch(nominee.department, nominee.rollNumber);
             const { isFirstTime, label: priorScholarshipLabel } = getPriorScholarshipInfo(nominee);
-            const cleanRemarks = getCleanRemarks(nominee.description);
             const cgpaValue = typeof nominee.cgpa === 'number' && nominee.cgpa > 0 ? nominee.cgpa : 8.5;
+            const income = Number(nominee.income);
 
             return (
               <div 
@@ -346,9 +336,9 @@ export default function FacultyRatingPage() {
                         )}
 
                         {/* Annual Income */}
-                        {nominee.income !== undefined && nominee.income !== null && (
+                        {nominee.income !== undefined && nominee.income !== null && Number.isFinite(income) && (
                           <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold">
-                            <span>Income: {formatCurrency(nominee.income)}/yr</span>
+                            <span>Income: {formatCurrency(income)}/yr</span>
                           </span>
                         )}
                       </div>

@@ -8,7 +8,7 @@ import { listNominees } from '@/lib/firebase/firestore/nominees';
 import { listUsers } from '@/lib/firebase/firestore/users';
 import { declareWinner as declareWinnerOnResult } from '@/lib/firebase/firestore/results';
 import { useAuthContext } from '@/components/providers/AuthProvider';
-import { computeResults, RankedNominee } from '@/lib/utils/computeResults';
+import { computeResults } from '@/lib/utils/computeResults';
 import { Card, CardBody, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { TableSkeleton } from '@/components/ui/Skeleton';
@@ -20,23 +20,12 @@ import toast from 'react-hot-toast';
 import { 
   Trophy, 
   ArrowLeft, 
-  Award, 
-  Users, 
   Filter, 
   CheckCircle2, 
-  Star, 
-  Sparkles, 
-  Building2, 
-  Calendar,
   CheckSquare,
   Square,
   ShieldCheck,
-  TrendingUp,
-  FileSpreadsheet,
   RotateCcw,
-  RefreshCw,
-  Mail,
-  Phone,
   ChevronDown,
   ChevronUp,
   UserCheck,
@@ -521,6 +510,7 @@ export default function ResultsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {top6Students.map((student) => {
             const isSelected = selectedAwardeeIds.includes(student.nomineeId);
+            const income = Number(student.income);
             const rankMedalColor = 
               student.rank === 1 ? 'bg-amber-500 text-white' :
               student.rank === 2 ? 'bg-slate-400 text-white' :
@@ -572,9 +562,9 @@ export default function ResultsPage() {
                     <span className="px-2 py-0.5 rounded-full text-2xs font-medium bg-slate-100 text-slate-700">
                       CGPA: {student.cgpa.toFixed(2)}
                     </span>
-                    {student.income && (
+                    {Number.isFinite(income) && income > 0 && (
                       <span className="px-2 py-0.5 rounded-full text-2xs font-medium bg-emerald-50 text-emerald-700">
-                        {formatCurrency(student.income)}
+                        {formatCurrency(income)}
                       </span>
                     )}
                   </div>

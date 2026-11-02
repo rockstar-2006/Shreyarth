@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useScholarships } from '@/lib/hooks/useScholarships';
 import { useAuthContext } from '@/components/providers/AuthProvider';
 import { getVote } from '@/lib/firebase/firestore/votes';
@@ -13,14 +13,12 @@ import Link from 'next/link';
 import { 
   Award, 
   Star, 
-  Sparkles, 
   Building2, 
   ArrowRight, 
   Clock, 
   CheckCircle2, 
   Calendar,
   UserCheck,
-  ShieldCheck,
   Lock,
   Edit3
 } from 'lucide-react';
@@ -35,11 +33,11 @@ export default function SWBDashboardPage() {
   const { user } = useAuthContext();
   const { scholarships, loading } = useScholarships();
   const [voteStatuses, setVoteStatuses] = useState<Record<string, ScholarshipStatusMap>>({});
-  const [checkingVotes, setCheckingVotes] = useState(false);
 
   // Any published or voting-open scholarship is available for faculty rating
-  const activeScholarships = scholarships.filter(
-    (s) => s.status === 'published' || s.status === 'voting_open'
+  const activeScholarships = useMemo(
+    () => scholarships.filter((s) => s.status === 'published' || s.status === 'voting_open'),
+    [scholarships]
   );
 
   const completedScholarships = scholarships.filter(
@@ -51,7 +49,6 @@ export default function SWBDashboardPage() {
     if (!user || activeScholarships.length === 0) return;
 
     let isMounted = true;
-    setCheckingVotes(true);
 
     const checkStatuses = async () => {
       const map: Record<string, ScholarshipStatusMap> = {};
@@ -74,7 +71,6 @@ export default function SWBDashboardPage() {
       }
       if (isMounted) {
         setVoteStatuses(map);
-        setCheckingVotes(false);
       }
     };
 
@@ -83,7 +79,7 @@ export default function SWBDashboardPage() {
     return () => {
       isMounted = false;
     };
-  }, [user, activeScholarships.length]);
+  }, [user, activeScholarships]);
 
   return (
     <div className="max-w-5xl mx-auto space-y-6 pb-12 animate-fade-in">

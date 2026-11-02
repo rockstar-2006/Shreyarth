@@ -6,10 +6,8 @@ import { getScholarship, publishScholarship, openVoting, closeVoting, resetSchol
 import { listAllVotes, resetScholarshipVotes } from '@/lib/firebase/firestore/votes';
 import { listUsers } from '@/lib/firebase/firestore/users';
 import { Scholarship, Vote, UserProfile } from '@/types';
-import { Card, CardBody, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { StatusChip } from '@/components/ui/StatusChip';
-import { Spinner } from '@/components/ui/Spinner';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Modal } from '@/components/ui/Modal';
 import { formatCurrency, formatDate } from '@/lib/utils/formatters';
@@ -21,7 +19,6 @@ import {
   ArrowLeft, 
   Calendar, 
   Building2, 
-  CheckCircle2, 
   ShieldCheck, 
   Sparkles, 
   FileText, 

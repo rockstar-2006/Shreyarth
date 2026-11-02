@@ -30,9 +30,7 @@ import {
   RotateCcw, 
   X,
   Sparkles,
-  Check,
-  Edit3,
-  FileText
+  Check
 } from 'lucide-react';
 
 export default function NomineesPage() {
@@ -114,7 +112,7 @@ export default function NomineesPage() {
       });
       toast.success(`Profile & extra details updated for ${editingNominee.studentName}!`);
       setEditingNominee(null);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
       toast.error('Failed to update candidate details.');
     } finally {
@@ -207,7 +205,7 @@ export default function NomineesPage() {
       setShowAddModal(false);
       setNewNominee({ studentName: '', rollNumber: '', department: '', semester: 'B.E', cgpa: '8.0', studentId: '', description: '' });
       setAddErrors({});
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
       toast.error('Failed to add nominee.');
     } finally {
@@ -262,7 +260,7 @@ export default function NomineesPage() {
 
         const casteVal = student.caste || '';
         const incomeVal = typeof student.income === 'number' ? student.income : (Number(student.income) || 0);
-        const prevSchVal = student.scholarshipsReceivedPreviousYear || (student as any).prevScholarship || '';
+        const prevSchVal = student.scholarshipsReceivedPreviousYear || '';
         const mobVal = student.mobileNo || '';
 
         // Detect branch department from student USN (e.g. AD -> AI & Data Science)
@@ -308,9 +306,9 @@ export default function NomineesPage() {
       } else {
         toast.error('No students were assigned.');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Failed to import students:', err);
-      toast.error(`Failed to import students: ${err?.message || 'Database error'}`);
+      toast.error(`Failed to import students: ${err instanceof Error ? err.message : 'Database error'}`);
     } finally {
       setImporting(false);
     }
@@ -515,7 +513,7 @@ export default function NomineesPage() {
                 <div className="sm:col-span-2">
                   <select
                     value={selectedPrevSch}
-                    onChange={(e) => setSelectedPrevSch(e.target.value as any)}
+                    onChange={(e) => setSelectedPrevSch(e.target.value as 'ALL' | 'FIRST_TIME' | 'PREV_RECEIVER')}
                     className="w-full py-2 px-2.5 bg-white border border-[#E2D9CE] rounded-xl text-xs font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7B1436]"
                   >
                     <option value="ALL">All Applicants</option>

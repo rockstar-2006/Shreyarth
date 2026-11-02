@@ -3,7 +3,6 @@
 import { Nominee } from '@/types';
 import { Trash2, Edit3, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { Spinner } from '@/components/ui/Spinner';
 
 import { TableSkeleton } from '@/components/ui/Skeleton';
 

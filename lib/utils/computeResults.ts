@@ -10,6 +10,7 @@ export interface RankedNominee {
   caste: string;
   income?: number | string;
   prevScholarship?: string;
+  description?: string;
   totalScore: number;
   voteCount: number;
   averageRating: number;
@@ -72,6 +73,7 @@ export function computeResults(
       caste,
       income: nominee.income,
       prevScholarship: nominee.prevScholarship,
+      description: nominee.description,
       totalScore,
       voteCount,
       averageRating,

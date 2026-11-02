@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuthContext } from '@/components/providers/AuthProvider';
 import { FullPageSpinner } from '@/components/ui/Spinner';
+import { type LucideIcon } from 'lucide-react';
 import {
   Sparkles,
   ArrowRight,
@@ -39,7 +40,7 @@ interface Scholarship {
   category: string;
   eligibility: string;
   seats: string;
-  icon: any;
+  icon: LucideIcon;
 }
 
 const scholarships: Scholarship[] = [

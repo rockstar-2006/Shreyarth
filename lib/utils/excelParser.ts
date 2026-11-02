@@ -1,17 +1,45 @@
 import { StudentRecord } from '@/types';
 
+interface SheetJS {
+  read(data: ArrayBuffer, options: { type: 'array' }): {
+    SheetNames: string[];
+    Sheets: Record<string, unknown>;
+  };
+  utils: {
+    sheet_to_json(worksheet: unknown, options: { defval: string }): Record<string, unknown>[];
+    json_to_sheet(data: object[]): unknown;
+    book_new(): unknown;
+    book_append_sheet(workbook: unknown, worksheet: unknown, name: string): void;
+  };
+  writeFile(workbook: unknown, filename: string): void;
+}
+
+declare global {
+  interface Window {
+    XLSX?: SheetJS;
+  }
+}
+
 /**
  * Dynamically loads the SheetJS library from a trusted CDN if not already present on window
  */
-export async function loadSheetJS(): Promise<any> {
-  if (typeof window !== 'undefined' && (window as any).XLSX) {
-    return (window as any).XLSX;
+export async function loadSheetJS(): Promise<SheetJS> {
+  const loadedSheetJS = typeof window !== 'undefined' ? window.XLSX : undefined;
+  if (loadedSheetJS) {
+    return loadedSheetJS;
   }
 
   return new Promise((resolve, reject) => {
     const existing = document.getElementById('sheetjs-cdn');
     if (existing) {
-      existing.addEventListener('load', () => resolve((window as any).XLSX));
+      existing.addEventListener('load', () => {
+        const xlsx = window.XLSX;
+        if (xlsx) {
+          resolve(xlsx);
+        } else {
+          reject(new Error('SheetJS loaded but XLSX object not found on window.'));
+        }
+      }, { once: true });
       return;
     }
 
@@ -20,8 +48,8 @@ export async function loadSheetJS(): Promise<any> {
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
     script.async = true;
     script.onload = () => {
-      if ((window as any).XLSX) {
-        resolve((window as any).XLSX);
+      if (window.XLSX) {
+        resolve(window.XLSX);
       } else {
         reject(new Error('SheetJS loaded but XLSX object not found on window.'));
       }
@@ -67,13 +95,13 @@ export async function parseStudentExcelFile(file: File): Promise<Omit<StudentRec
   const worksheet = workbook.Sheets[firstSheetName];
 
   // Convert to JSON with raw header rows
-  const rawRows: Record<string, any>[] = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+  const rawRows = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
 
   const parsedStudents: Omit<StudentRecord, 'id' | 'createdAt'>[] = [];
 
   rawRows.forEach((row, index) => {
     // Map normalized fields
-    const mapped: Record<string, any> = {};
+    const mapped: Record<string, string> = {};
     Object.keys(row).forEach((header) => {
       const normalizedKey = normalizeHeader(header);
       mapped[normalizedKey] = String(row[header] ?? '').trim();
@@ -225,12 +253,12 @@ export async function parseCommitteeExcelFile(file: File): Promise<ParsedCommitt
 
   const firstSheetName = workbook.SheetNames[0];
   const worksheet = workbook.Sheets[firstSheetName];
-  const rawRows: Record<string, any>[] = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+  const rawRows = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
 
   const parsedMembers: ParsedCommitteeMember[] = [];
 
   rawRows.forEach((row, index) => {
-    const mapped: Record<string, any> = {};
+    const mapped: Record<string, string> = {};
     Object.keys(row).forEach((header) => {
       const normalizedKey = normalizeCommitteeHeader(header);
       mapped[normalizedKey] = String(row[header] ?? '').trim();
@@ -324,4 +352,3 @@ export async function downloadCommitteeSampleTemplate(): Promise<void> {
 
   XLSX.writeFile(workbook, 'SMVITM_Committee_Members_Template.xlsx');
 }
-

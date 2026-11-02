@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { useAuthContext } from '@/components/providers/AuthProvider';
 import { getScholarship, updateScholarship } from '@/lib/firebase/firestore/scholarships';
 import { Scholarship, ScholarshipCustomField, ScholarshipStatus } from '@/types';
 import { Input } from '@/components/ui/Input';
@@ -22,18 +21,14 @@ import {
   Sparkles, 
   FileText, 
   ShieldCheck, 
-  Percent, 
   CheckCircle, 
   AlertCircle,
   Building2,
-  Calendar
 } from 'lucide-react';
 
 export default function EditScholarshipPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
-  const { user } = useAuthContext();
-
   const [scholarship, setScholarship] = useState<Scholarship | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -178,8 +173,6 @@ export default function EditScholarshipPage() {
   }
 
   const isDraft = scholarship.status === 'draft';
-  const isPublished = scholarship.status === 'published' || scholarship.status === 'voting_open';
-
   return (
     <div className="max-w-3xl mx-auto space-y-6 pb-20 animate-fade-in">
       

@@ -19,7 +19,7 @@ export function useNominees(scholarshipId: string) {
 
     // Safety timeout: ensure loading is NEVER stuck indefinitely
     const timeout = setTimeout(async () => {
-      if (isSubscribed && loading) {
+      if (isSubscribed) {
         try {
           const directData = await listNominees(scholarshipId);
           if (isSubscribed) {

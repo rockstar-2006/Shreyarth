@@ -18,7 +18,6 @@ import { Modal } from '@/components/ui/Modal';
 import { Badge } from '@/components/ui/Badge';
 import { Spinner } from '@/components/ui/Spinner';
 import { TableSkeleton } from '@/components/ui/Skeleton';
-import { formatRole } from '@/lib/utils/formatters';
 import { validateEmail } from '@/lib/utils/validators';
 import toast from 'react-hot-toast';
 import { 

@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from 'react';
 import { useScholarships } from '@/lib/hooks/useScholarships';
-import { Spinner } from '@/components/ui/Spinner';
 import { Skeleton, TableSkeleton } from '@/components/ui/Skeleton';
 import { 
   Award, 
@@ -25,7 +24,6 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { formatCurrency } from '@/lib/utils/formatters';
-import { Scholarship } from '@/types';
 
 type FolderFilter = 'all' | 'published' | 'voting_open' | 'draft' | 'closed';
 

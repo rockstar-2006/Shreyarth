@@ -1,5 +1,6 @@
 import {
   collection,
+  DocumentData,
   doc,
   getDocs,
   addDoc,
@@ -22,7 +23,7 @@ export async function addNominee(
   const col = collection(db, COLLECTION);
   
   // Sanitize all fields to ensure no `undefined` value is passed to Firestore addDoc
-  const payload: Record<string, any> = {
+  const payload: DocumentData = {
     scholarshipId: data.scholarshipId || '',
     studentId: data.studentId || '',
     studentName: data.studentName || '',
@@ -68,7 +69,7 @@ export async function updateNominee(
   updates: Partial<Omit<Nominee, 'id' | 'addedAt' | 'scholarshipId'>>
 ): Promise<void> {
   const ref = doc(db, COLLECTION, nomineeId);
-  const cleanUpdates: Record<string, any> = {};
+  const cleanUpdates: DocumentData = {};
   for (const [k, v] of Object.entries(updates)) {
     if (v !== undefined) {
       cleanUpdates[k] = v;

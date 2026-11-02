@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { User } from 'firebase/auth';
+import { Timestamp } from 'firebase/firestore';
 import { 
   onAuthChange, 
   signIn as firebaseSignIn, 
@@ -106,6 +107,7 @@ export function useAuth(): UseAuthReturn {
           email: fbUser.email.toLowerCase(),
           role: 'admin',
           department: 'Administration',
+          createdAt: Timestamp.now(),
         };
         await createUserProfile(profile);
       }

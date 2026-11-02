@@ -16,7 +16,6 @@ import {
   Building2,
   UserCheck,
   Sparkles,
-  Info,
 } from 'lucide-react';
 
 type RoleType = 'student' | 'swb' | 'admin';

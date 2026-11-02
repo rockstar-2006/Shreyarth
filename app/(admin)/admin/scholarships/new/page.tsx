@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { Button } from '@/components/ui/Button';
 import { Card, CardBody, CardHeader, CardFooter } from '@/components/ui/Card';
-import { Sparkles, ArrowRight, Award, CheckCircle, FileText, BookmarkPlus, Plus, Trash2 } from 'lucide-react';
+import { Sparkles, Award, CheckCircle, FileText, BookmarkPlus, Plus, Trash2 } from 'lucide-react';
 import { ScholarshipCustomField } from '@/types';
 import toast from 'react-hot-toast';
 
