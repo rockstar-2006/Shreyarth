@@ -179,9 +179,15 @@ export default function UsersPage() {
   };
 
   const grouped = {
-    swb_member: users.filter((u) => u.role === 'swb_member'),
-    admin: users.filter((u) => u.role === 'admin'),
-    student: users.filter((u) => u.role === 'student'),
+    swb_member: users
+      .filter((u) => u.role === 'swb_member')
+      .sort((a, b) => (a.name || '').localeCompare(b.name || '')),
+    admin: users
+      .filter((u) => u.role === 'admin')
+      .sort((a, b) => (a.name || '').localeCompare(b.name || '')),
+    student: users
+      .filter((u) => u.role === 'student')
+      .sort((a, b) => (a.name || '').localeCompare(b.name || '')),
   };
 
   return (
@@ -275,8 +281,8 @@ export default function UsersPage() {
                     <tbody className="divide-y divide-[#EAE3D9]">
                       {grouped.swb_member.map((m, idx) => (
                         <tr key={m.uid} className="hover:bg-[#FFFDF9] transition-colors">
-                          <td className="py-3 px-4 text-center font-mono font-semibold text-slate-500">
-                            {m.slNo || idx + 1}
+                          <td className="py-3 px-4 text-center font-mono font-semibold text-slate-700">
+                            {idx + 1}
                           </td>
                           <td className="py-3 px-4">
                             <span className="font-semibold text-smvitm-text text-sm block">

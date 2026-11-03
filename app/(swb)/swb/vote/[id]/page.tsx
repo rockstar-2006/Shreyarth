@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { getScholarship } from '@/lib/firebase/firestore/scholarships';
 import { listNominees } from '@/lib/firebase/firestore/nominees';
@@ -68,6 +68,21 @@ export default function FacultyRatingPage() {
   const [submitting, setSubmitting] = useState(false);
   const [hasPreviousSubmission, setHasPreviousSubmission] = useState(false);
 
+  // Dynamic scale: 1 to 10 if <= 10 candidates; 1 to N if > 10 candidates
+  const maxRating = Math.max(10, nominees.length);
+  const allScores = useMemo(() => Array.from({ length: maxRating }, (_, i) => i + 1), [maxRating]);
+
+  // Map of which score is assigned to which nomineeId
+  const scoreToNomineeMap = useMemo(() => {
+    const map = new Map<number, string>();
+    Object.entries(ratings).forEach(([nId, score]) => {
+      if (score > 0) {
+        map.set(score, nId);
+      }
+    });
+    return map;
+  }, [ratings]);
+
   useEffect(() => {
     if (!id || !user) return;
 
@@ -91,10 +106,34 @@ export default function FacultyRatingPage() {
   }, [id, user]);
 
   const handleRate = (nomineeId: string, score: number) => {
-    setRatings((prev) => ({
-      ...prev,
-      [nomineeId]: score,
-    }));
+    setRatings((prev) => {
+      const next = { ...prev };
+
+      // If clicking already selected score for this candidate, clear it
+      if (next[nomineeId] === score) {
+        delete next[nomineeId];
+        return next;
+      }
+
+      // If this score was already assigned to another student, transfer it
+      const previousOwnerId = scoreToNomineeMap.get(score);
+      if (previousOwnerId && previousOwnerId !== nomineeId) {
+        const prevOwner = nominees.find((n) => (n.studentId === previousOwnerId || n.id === previousOwnerId));
+        delete next[previousOwnerId];
+        toast(`Transferred score ${score} from ${prevOwner?.studentName?.split(' ')[0] || 'other student'}`);
+      }
+
+      next[nomineeId] = score;
+      return next;
+    });
+  };
+
+  const handleClearRate = (nomineeId: string) => {
+    setRatings((prev) => {
+      const next = { ...prev };
+      delete next[nomineeId];
+      return next;
+    });
   };
 
   const ratedCount = Object.keys(ratings).filter((k) => ratings[k] > 0).length;
@@ -158,11 +197,12 @@ export default function FacultyRatingPage() {
     );
   }
 
-  const getScoreLabel = (score: number) => {
-    if (score === 10) return { label: 'Exceptional (Top Priority)', color: 'text-emerald-700 font-bold' };
-    if (score >= 8) return { label: 'Outstanding / Highly Deserving', color: 'text-emerald-600 font-semibold' };
-    if (score >= 6) return { label: 'Good / Recommended', color: 'text-amber-700 font-semibold' };
-    if (score >= 4) return { label: 'Average', color: 'text-slate-600' };
+  const getScoreLabel = (score: number, max: number = 10) => {
+    const ratio = score / max;
+    if (ratio === 1) return { label: 'Top Priority / Highest Rank', color: 'text-emerald-700 font-bold' };
+    if (ratio >= 0.8) return { label: 'Outstanding / Highly Deserving', color: 'text-emerald-600 font-semibold' };
+    if (ratio >= 0.6) return { label: 'Good / Recommended', color: 'text-amber-700 font-semibold' };
+    if (ratio >= 0.4) return { label: 'Average', color: 'text-slate-600' };
     return { label: 'Below Average', color: 'text-rose-600' };
   };
 
@@ -242,11 +282,10 @@ export default function FacultyRatingPage() {
           <div>
             <h3 className="font-heading font-bold text-sm text-[#7B1436] flex items-center gap-2">
               <Star size={16} className="text-[#C59048] fill-[#C59048]" />
-              Student Rating Instructions (Score 1 to 10)
+              Unique Student Rating System (Scale 1 to {maxRating})
             </h3>
             <p className="text-xs text-smvitm-textSecondary mt-0.5 leading-relaxed">
-              Rate each candidate out of <strong>10</strong> based on academic consistency, financial need, and conduct.
-              The top 6 students will be compiled by the committee based on total scores.
+              Rate each candidate with an isolated score from <strong>1 to {maxRating}</strong>. To eliminate tie conflicts, each score is unique per faculty evaluator—assigning a score reserves it for that student so available scores count down naturally.
             </p>
           </div>
 
@@ -283,16 +322,30 @@ export default function FacultyRatingPage() {
       ) : (
         <div className="space-y-4">
           {nominees.map((nominee, idx) => {
-            const currentRating = ratings[nominee.studentId] || 0;
-            const scoreInfo = currentRating > 0 ? getScoreLabel(currentRating) : null;
+            const studentKey = nominee.studentId || nominee.id;
+            const currentRating = ratings[studentKey] || 0;
+            const scoreInfo = currentRating > 0 ? getScoreLabel(currentRating, maxRating) : null;
             const branchName = getResolvedBranch(nominee.department, nominee.rollNumber);
             const { isFirstTime, label: priorScholarshipLabel } = getPriorScholarshipInfo(nominee);
             const cgpaValue = typeof nominee.cgpa === 'number' && nominee.cgpa > 0 ? nominee.cgpa : 8.5;
             const income = Number(nominee.income);
 
+            // Compute which scores are taken by other candidates
+            const takenScoresForThisStudent: { score: number; otherNomineeName: string }[] = [];
+            allScores.forEach((score) => {
+              const ownerId = scoreToNomineeMap.get(score);
+              if (ownerId && ownerId !== studentKey) {
+                const otherNom = nominees.find((n) => (n.studentId === ownerId || n.id === ownerId));
+                takenScoresForThisStudent.push({
+                  score,
+                  otherNomineeName: otherNom?.studentName || 'Other Candidate',
+                });
+              }
+            });
+
             return (
               <div 
-                key={nominee.id || nominee.studentId}
+                key={studentKey}
                 className={`bg-white rounded-2xl border-2 transition-all duration-200 p-5 shadow-card hover:shadow-cardHover ${
                   currentRating > 0 ? 'border-[#C59048] ring-1 ring-[#C59048]/40' : 'border-[#E2D9CE]'
                 }`}
@@ -350,7 +403,7 @@ export default function FacultyRatingPage() {
                     {currentRating > 0 ? (
                       <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-300 font-heading font-bold text-xs shadow-xs">
                         <Star size={14} className="fill-emerald-600 text-emerald-600" />
-                        <span>Rating: {currentRating} / 10</span>
+                        <span>Rating: {currentRating} / {maxRating}</span>
                       </div>
                     ) : (
                       <span className="text-2xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
@@ -408,12 +461,25 @@ export default function FacultyRatingPage() {
                   </div>
                 )}
 
-                {/* ─── 1 to 10 Rating Buttons ─── */}
+                {/* ─── Unique Rating Buttons (Scale 1 to maxRating) ─── */}
                 <div className="pt-4 mt-1 border-t border-[#E2D9CE]/50">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-slate-800">
-                      Rate this student (Score 1 to 10):
-                    </span>
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-slate-800">
+                        Rate this student (Unique Score 1 to {maxRating}):
+                      </span>
+                      {currentRating > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => handleClearRate(studentKey)}
+                          className="text-2xs text-rose-600 hover:text-rose-800 font-semibold hover:underline flex items-center gap-1 bg-rose-50 px-2 py-0.5 rounded border border-rose-200 transition-colors"
+                          title="Clear this score to release it back into available pool"
+                        >
+                          ✕ Clear Rating
+                        </button>
+                      )}
+                    </div>
+
                     {scoreInfo && (
                       <span className={`text-xs ${scoreInfo.color}`}>
                         {scoreInfo.label}
@@ -421,19 +487,26 @@ export default function FacultyRatingPage() {
                     )}
                   </div>
 
-                  <div className="grid grid-cols-5 sm:grid-cols-10 gap-1.5">
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((score) => {
+                  {/* Active / Available Rating Buttons (Consumed scores disappear for other candidates) */}
+                  <div className="flex flex-wrap gap-1.5">
+                    {allScores.map((score) => {
                       const isSelected = currentRating === score;
+                      const ownerId = scoreToNomineeMap.get(score);
+                      const isTakenByOther = ownerId !== undefined && ownerId !== studentKey;
+
+                      // If this score is already assigned to another student, don't show it as available here
+                      if (isTakenByOther) return null;
+
                       return (
                         <button
                           key={score}
                           type="button"
-                          onClick={() => handleRate(nominee.studentId, score)}
-                          className={`flex flex-col items-center justify-center py-2.5 px-1 rounded-xl font-heading font-bold text-sm transition-all duration-150 active:scale-95 border ${
+                          onClick={() => handleRate(studentKey, score)}
+                          className={`flex flex-col items-center justify-center py-2 px-3 rounded-xl font-heading font-bold text-xs sm:text-sm transition-all duration-150 active:scale-95 border min-w-[42px] ${
                             isSelected
-                              ? score >= 8
+                              ? score >= Math.round(maxRating * 0.8)
                                 ? 'bg-emerald-700 text-white border-emerald-800 shadow-md scale-105 ring-2 ring-emerald-400'
-                                : score >= 6
+                                : score >= Math.round(maxRating * 0.6)
                                 ? 'bg-[#C59048] text-white border-[#B58038] shadow-md scale-105 ring-2 ring-amber-300'
                                 : 'bg-[#7B1436] text-white border-[#5A0F28] shadow-md scale-105'
                               : 'bg-[#FAF8F5] hover:bg-white text-slate-700 border-[#E2D9CE] hover:border-[#C59048]'
@@ -444,6 +517,26 @@ export default function FacultyRatingPage() {
                       );
                     })}
                   </div>
+
+                  {/* Taken Scores with 1-click Transfer option */}
+                  {takenScoresForThisStudent.length > 0 && (
+                    <div className="mt-2.5 pt-2 border-t border-dashed border-[#E2D9CE]/70 text-2xs text-slate-500 flex flex-wrap items-center gap-1.5">
+                      <span className="font-medium text-slate-400 text-3xs uppercase tracking-wider">Scores assigned to other candidates:</span>
+                      {takenScoresForThisStudent.map(({ score, otherNomineeName }) => (
+                        <button
+                          key={score}
+                          type="button"
+                          onClick={() => handleRate(studentKey, score)}
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-amber-100 text-slate-600 hover:text-amber-900 border border-slate-200 transition-colors"
+                          title={`Click to reassign score ${score} from ${otherNomineeName} to ${nominee.studentName}`}
+                        >
+                          <span className="font-bold text-[#7B1436]">{score}</span>
+                          <span className="text-3xs text-slate-500">({otherNomineeName.split(' ')[0]})</span>
+                          <span className="text-3xs text-[#C59048] font-bold">↳ Transfer</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             );

@@ -31,21 +31,10 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState('');
-  const [showDemoHelp, setShowDemoHelp] = useState(false);
 
   const handleRoleChange = (selectedRole: RoleType) => {
     setRole(selectedRole);
     setError('');
-    if (selectedRole === 'student') {
-      setEmail('student@smvitm.ac.in');
-      setPassword('student123');
-    } else if (selectedRole === 'swb') {
-      setEmail('swb@smvitm.ac.in');
-      setPassword('swb12345');
-    } else {
-      setEmail('admin@smvitm.edu.in');
-      setPassword('Admin@1234');
-    }
   };
 
   const handleGoogleSignIn = async () => {
@@ -327,51 +316,10 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* Demo Credentials Quick-Fill Drawer */}
-        <div className="mt-5 pt-4 border-t border-[#E9DED8]/70">
-          <button
-            type="button"
-            onClick={() => setShowDemoHelp(!showDemoHelp)}
-            className="w-full flex items-center justify-between text-[11px] font-semibold text-[#7B1436] hover:text-[#5a0f28] cursor-pointer"
-          >
-            <span className="flex items-center gap-1.5">
-              <Sparkles className="h-3 w-3 text-[#C59048]" />
-              Need quick test credentials? (Click to view)
-            </span>
-            <span className="text-xs">{showDemoHelp ? '▲' : '▼'}</span>
-          </button>
-
-          {showDemoHelp && (
-            <div className="mt-2.5 p-3 rounded-xl bg-[#F5EDE4]/60 border border-[#E9DED8] space-y-1.5 text-[11px] text-[#34252D] animate-fade-in">
-              <div
-                onClick={() => handleRoleChange('student')}
-                className="flex items-center justify-between p-1.5 rounded-lg hover:bg-white cursor-pointer transition"
-              >
-                <span className="font-medium text-[#7B1436]">Student:</span>
-                <span className="font-mono text-[10px] text-[#8A7E82]">student@smvitm.ac.in (Click to fill)</span>
-              </div>
-              <div
-                onClick={() => handleRoleChange('swb')}
-                className="flex items-center justify-between p-1.5 rounded-lg hover:bg-white cursor-pointer transition"
-              >
-                <span className="font-medium text-[#7B1436]">SWB Member:</span>
-                <span className="font-mono text-[10px] text-[#8A7E82]">swb@smvitm.ac.in (Click to fill)</span>
-              </div>
-              <div
-                onClick={() => handleRoleChange('admin')}
-                className="flex items-center justify-between p-1.5 rounded-lg hover:bg-white cursor-pointer transition"
-              >
-                <span className="font-medium text-[#7B1436]">Admin:</span>
-                <span className="font-mono text-[10px] text-[#8A7E82]">admin@smvitm.edu.in (Click to fill)</span>
-              </div>
-            </div>
-          )}
-        </div>
-
         {/* Support Help */}
-        <p className="text-center text-[#8A7E82] text-[11px] mt-4 leading-relaxed">
-          Need portal enrollment?{' '}
-          <span className="text-[#7B1436] font-semibold">Contact your Department Scholarship Coordinator.</span>
+        <p className="text-center text-[#8A7E82] text-[11px] mt-6 leading-relaxed border-t border-[#E9DED8]/70 pt-4">
+          Need portal access or credentials?{' '}
+          <span className="text-[#7B1436] font-semibold">Contact SMVITM Administration or use Sign in with Google.</span>
         </p>
       </div>
     </div>

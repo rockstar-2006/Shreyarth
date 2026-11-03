@@ -239,12 +239,12 @@ export default function SWBDashboardPage() {
                             {hasVoted ? (
                               <>
                                 <Edit3 size={16} className="text-[#F3DE98]" />
-                                <span>Review / Update Ratings (1–10)</span>
+                                <span>Review / Update Candidate Ratings</span>
                               </>
                             ) : (
                               <>
                                 <Star size={16} className="text-[#F3DE98] fill-[#F3DE98]" />
-                                <span>Start Rating Students (Out of 10)</span>
+                                <span>Start Rating Candidates</span>
                               </>
                             )}
                             <ArrowRight size={15} className="group-hover/btn:translate-x-1 transition-transform ml-1" />

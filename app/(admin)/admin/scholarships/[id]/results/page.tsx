@@ -54,6 +54,8 @@ export default function ResultsPage() {
   const [selectedCaste, setSelectedCaste] = useState<string>('all');
   const [selectedAwardeeIds, setSelectedAwardeeIds] = useState<string[]>([]);
 
+  const maxRating = Math.max(10, nominees.length);
+
   useEffect(() => {
     Promise.all([
       getScholarship(id),
@@ -536,7 +538,7 @@ export default function ResultsPage() {
 
                     <div className="flex items-center gap-1.5">
                       <span className="text-2xs font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                        ⭐ {student.averageRating} / 10
+                        ⭐ {student.averageRating} / {maxRating}
                       </span>
                       {isSelected ? (
                         <CheckSquare size={18} className="text-[#7B1436]" />
