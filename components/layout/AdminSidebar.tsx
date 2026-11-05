@@ -168,7 +168,7 @@ export function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
           {/* Clean College Identity Pill */}
           <div className="mt-3 px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-[#C59048]/40 shadow-sm flex items-center gap-2 text-2xs text-[#7B1436] font-semibold">
             <span className="w-1.5 h-1.5 rounded-full bg-[#C59048] animate-pulse" />
-            <span className="font-heading">SHREYARTH · SMVITM Portal</span>
+            <span className="font-heading">scholarship-smv · SMVITM Portal</span>
           </div>
 
           <p className="text-[11px] text-white/90 font-medium drop-shadow-sm mt-1">

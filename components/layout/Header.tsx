@@ -19,7 +19,7 @@ const roleColors: Record<string, string> = {
 };
 
 export function Header({
-  title = 'SHREYARTH — Scholarship Portal',
+  title = 'scholarship-smv — Scholarship Portal',
   onToggleSidebar,
   isSidebarOpen = false,
 }: HeaderProps) {

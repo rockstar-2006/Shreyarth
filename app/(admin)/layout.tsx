@@ -29,7 +29,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="min-h-screen flex flex-col bg-smvitm-bg">
       <Header 
-        title="SHREYARTH — Administrative Console" 
+        title="scholarship-smv — Administrative Console" 
         onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
         isSidebarOpen={sidebarOpen}
       />

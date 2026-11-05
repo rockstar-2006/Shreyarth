@@ -372,7 +372,7 @@ export const DEFAULT_FORM_FIELDS: FormFieldConfig[] = [
 const DEFAULT_CONFIG: ApplicationFormConfig = {
   isOpen: true,
   academicYear: '2026-27',
-  title: 'SHREYARTH — SMVITM Scholarship Application Form',
+  title: 'scholarship-smv — SMVITM Scholarship Application Form',
   description: 'Shri Madhwa Vadiraja Institute of Technology & Management (SMVITM) — Student Welfare Board (SWB). Apply for institutional financial assistance, merit-cum-means aid, and endowed trust scholarships for the academic year 2026-27. No student login required.',
   closedMessage: 'Scholarship applications for the current cycle are now closed. For further assistance or urgent inquiries, please contact the Student Welfare Board (SWB) office at SMVITM Bantakal.',
   allowedCastes: DEFAULT_CASTES,

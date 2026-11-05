@@ -364,7 +364,7 @@ export default function HomePage() {
             <div>
               <span className="inline-flex items-center gap-2 rounded-full border border-[#C59048]/40 bg-[#C59048]/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-[#7B1436]">
                 <Sparkles className="h-3.5 w-3.5 text-[#7B1436]" aria-hidden="true" />
-                ॥ ಶ್ರೇಯಾರ್ಥ • SHREYARTH PORTAL ॥
+                scholarship-smv • SMVITM PORTAL
               </span>
 
               <h1 className="mt-6 text-balance font-display text-5xl leading-[1.05] text-[#7B1436] md:text-6xl lg:text-7xl">
@@ -374,7 +374,7 @@ export default function HomePage() {
               </h1>
 
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-[#8A7E82]">
-                <strong className="text-[#7B1436] font-semibold">SHREYARTH (ಶ್ರೇಯಾರ್ಥ)</strong> is the official Institutional Scholarship &amp; Financial Aid Portal of SMVITM. Empowering student merit (<em className="text-[#7B1436]">Shrey</em>) with dedicated institutional grant (<em className="text-[#C59048]">Arth</em>). Browse endowment funds, check eligibility, and submit your scholarship application seamlessly.
+                <strong className="text-[#7B1436] font-semibold">scholarship-smv</strong> is the official Institutional Scholarship &amp; Financial Aid Portal of SMVITM. Empowering student merit with dedicated institutional grants. Browse endowment funds, check eligibility, and submit your scholarship application seamlessly.
               </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-3">

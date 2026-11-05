@@ -12,9 +12,9 @@ const sans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'SHREYARTH — SMVITM Scholarship Portal',
-  description: 'SHREYARTH (ಶ್ರೇಯಾರ್ಥ) — Official scholarship portal of Shri Madhwa Vadiraja Institute of Technology & Management (SMVITM), Bantakal. Empowering student merit (Shrey) with financial resources (Arth).',
-  keywords: ['Shreyarth', 'SMVITM', 'scholarship', 'Bantakal', 'Udupi', 'SSVMET'],
+  title: 'scholarship-smv — SMVITM Scholarship Portal',
+  description: 'scholarship-smv — Official scholarship portal of Shri Madhwa Vadiraja Institute of Technology & Management (SMVITM), Bantakal. Empowering student merit with financial resources.',
+  keywords: ['scholarship-smv', 'SMVITM', 'scholarship', 'Bantakal', 'Udupi', 'SSVMET'],
 };
 
 export default function RootLayout({

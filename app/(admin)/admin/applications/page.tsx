@@ -213,7 +213,7 @@ export default function ApplicationsManagementPage() {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `SHREYARTH_SMVITM_Scholarship_Applications_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.setAttribute('download', `scholarship_smv_SMVITM_Scholarship_Applications_${new Date().toISOString().slice(0, 10)}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -228,7 +228,7 @@ export default function ApplicationsManagementPage() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="font-heading font-extrabold text-2xl text-[#7B1436]">
-              SHREYARTH — Student Applications (SMVITM)
+              scholarship-smv — Student Applications (SMVITM)
             </h1>
             <Badge variant="default">{applications.length}</Badge>
           </div>

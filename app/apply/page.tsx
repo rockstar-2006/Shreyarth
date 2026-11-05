@@ -316,7 +316,7 @@ export default function StudentApplicationPage() {
         <div className="text-center space-y-4 animate-fade-in">
           <div className="w-14 h-14 border-4 border-[#7B1436] border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="font-heading font-semibold text-[#7B1436] text-lg">
-            Loading SHREYARTH — SMVITM Scholarship Application Form...
+            Loading scholarship-smv — SMVITM Scholarship Application Form...
           </p>
         </div>
       </div>
@@ -368,10 +368,10 @@ export default function StudentApplicationPage() {
               <CheckCircle2 size={32} />
             </div>
             <h1 className="font-heading font-extrabold text-xl sm:text-2xl md:text-3xl text-[#7B1436] leading-snug">
-              SHREYARTH — Application Submitted Successfully!
+              scholarship-smv — Application Submitted Successfully!
             </h1>
             <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto">
-              Your scholarship application has been registered with the SHREYARTH portal for SMVITM Student Welfare Board (SWB).
+              Your scholarship application has been registered with the scholarship-smv portal for SMVITM Student Welfare Board (SWB).
             </p>
           </div>
 
@@ -469,12 +469,12 @@ export default function StudentApplicationPage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 border-b border-[#EAE3D9] pb-3.5 sm:pb-4">
               <div className="flex items-center gap-2.5 sm:gap-3">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#7B1436] text-white flex items-center justify-center font-heading font-black text-xs sm:text-sm shadow-md flex-shrink-0">
-                  ॥ಶ್ರೇ॥
+                  SMV
                 </div>
                 <div className="min-w-0">
                   <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                     <span className="font-heading font-black text-sm sm:text-base text-[#7B1436] tracking-wider uppercase">
-                      SHREYARTH
+                      scholarship-smv
                     </span>
                     <span className="text-xs text-slate-400 font-semibold">•</span>
                     <span className="font-heading font-bold text-xs text-slate-700 uppercase tracking-wide">
@@ -492,14 +492,14 @@ export default function StudentApplicationPage() {
               <div className="self-start sm:self-auto">
                 <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full bg-[#FDF6E7] border border-[#C59048]/40 text-[#7B1436] text-[10px] sm:text-[11px] font-bold whitespace-nowrap">
                   <Sparkles size={12} className="text-[#C59048]" />
-                  SHREYARTH • SMVITM SWB 2026–27
+                  scholarship-smv • SMVITM SWB 2026–27
                 </span>
               </div>
             </div>
 
             <div>
               <h1 className="font-heading font-extrabold text-lg sm:text-2xl md:text-3xl text-slate-900 tracking-tight leading-snug">
-                {config?.title || 'SHREYARTH — SMVITM Scholarship Application Form'}
+                {config?.title || 'scholarship-smv — SMVITM Scholarship Application Form'}
               </h1>
               <p className="text-xs sm:text-sm text-slate-600 mt-1.5 sm:mt-2 leading-relaxed">
                 {config?.description || 'Shri Madhwa Vadiraja Institute of Technology & Management (SMVITM) — Student Welfare Board (SWB). Apply for institutional financial assistance, merit-cum-means aid, and endowed trust scholarships for the academic year 2026-27.'}
