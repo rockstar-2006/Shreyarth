@@ -465,8 +465,8 @@ export default function ApplicationsManagementPage() {
 
                         <td className="py-3.5 px-4">
                           <div className="space-y-0.5">
-                            <span className="font-mono font-bold text-slate-800 block">
-                              {app.cgpa > 0 ? `CGPA: ${app.cgpa}` : '—'}
+                            <span className="font-mono font-bold text-slate-800 block text-xs">
+                              {app.cgpa > 0 ? `CGPA: ${app.cgpa}` : (app.semester === '1st Sem' ? '1st Sem (Awaited)' : '—')}
                             </span>
                             <span className="text-2xs text-slate-500 block">
                               PUC: {app.pucPercentage}%
@@ -601,7 +601,7 @@ export default function ApplicationsManagementPage() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
                   <div><span className="text-slate-500 block">Department:</span> <strong>{selectedApp.department}</strong></div>
                   <div><span className="text-slate-500 block">Semester:</span> <strong>{selectedApp.semester}</strong></div>
-                  <div><span className="text-slate-500 block">Current CGPA:</span> <strong>{selectedApp.cgpa}</strong></div>
+                  <div><span className="text-slate-500 block">Current CGPA:</span> <strong>{selectedApp.cgpa > 0 ? selectedApp.cgpa : (selectedApp.semester === '1st Sem' ? '1st Sem (Exams Awaited)' : 'Not Provided')}</strong></div>
                   <div><span className="text-slate-500 block">Backlog Status:</span> <strong>{selectedApp.backlogStatus}</strong></div>
                   <div><span className="text-slate-500 block">10th / SSLC:</span> <strong>{selectedApp.sslcPercentage}%</strong></div>
                   <div><span className="text-slate-500 block">12th / PUC:</span> <strong>{selectedApp.pucPercentage}%</strong></div>

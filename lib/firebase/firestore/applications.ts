@@ -123,8 +123,8 @@ export const DEFAULT_FORM_FIELDS: FormFieldConfig[] = [
     required: false,
     enabled: true,
     canDelete: false,
-    placeholder: 'e.g. 8.45',
-    helpText: 'Cumulative Grade Point Average up to latest declared results',
+    placeholder: 'e.g. 8.45 (Leave blank if 1st Sem)',
+    helpText: 'Cumulative Grade Point Average up to latest declared results (Optional for 1st Year / 1st Sem)',
     order: 5,
   },
   {

@@ -72,7 +72,7 @@ const PARENT_STATUS_OPTIONS: { value: ParentStatus; label: string; desc: string 
 ];
 
 const BACKLOG_OPTIONS: { value: BacklogStatus; label: string }[] = [
-  { value: 'all_cleared_first_attempt', label: 'All Cleared in 1st Attempt (No backlogs ever)' },
+  { value: 'all_cleared_first_attempt', label: 'All Cleared in 1st Attempt / 1st Year (No Backlogs)' },
   { value: 'past_cleared', label: 'Past Backlogs Cleared (Currently 0 active backlogs)' },
   { value: 'active_1_2', label: '1 to 2 Active Backlogs' },
   { value: 'active_3_plus', label: '3 or More Active Backlogs' },
@@ -593,19 +593,29 @@ export default function StudentApplicationPage() {
 
               {isFieldEnabled('cgpa') && (
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
-                    Current Engineering CGPA
-                  </label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-bold text-slate-700">
+                      Current Engineering CGPA
+                    </label>
+                    <span className="text-[10px] text-slate-500 font-medium">
+                      Optional (Leave blank if 1st Sem)
+                    </span>
+                  </div>
                   <input
                     type="number"
                     step="0.01"
                     min="0"
                     max="10"
-                    placeholder="e.g. 8.45"
+                    placeholder={semester === '1st Sem' ? 'Leave blank (1st Sem exams awaited)' : 'e.g. 8.45'}
                     value={cgpa}
                     onChange={(e) => setCgpa(e.target.value)}
                     className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                   />
+                  {semester === '1st Sem' && (
+                    <p className="text-[11px] text-amber-800 bg-[#FAF3E0] border border-[#C59048]/40 rounded-xl p-2.5 mt-1.5 leading-snug">
+                      ℹ️ <strong>1st Sem Students:</strong> Since your first semester university exams have not taken place yet, leave CGPA empty. Your application is fully valid and will be evaluated based on your 10th (SSLC) and 12th (PUC) marks.
+                    </p>
+                  )}
                 </div>
               )}
 
