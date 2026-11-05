@@ -358,79 +358,79 @@ export default function StudentApplicationPage() {
   // Success Confirmation Screen
   if (submittedRef) {
     return (
-      <div className="min-h-screen bg-[#F7F4EE] py-12 px-4 flex flex-col items-center justify-center">
-        <div className="max-w-2xl w-full bg-white rounded-3xl border border-[#E2D9CE] shadow-2xl p-8 sm:p-12 space-y-8 animate-fade-in relative overflow-hidden">
+      <div className="min-h-screen bg-[#F7F4EE] py-6 sm:py-12 px-3 sm:px-4 flex flex-col items-center justify-center">
+        <div className="max-w-2xl w-full bg-white rounded-2xl sm:rounded-3xl border border-[#E2D9CE] shadow-xl p-5 sm:p-8 md:p-12 space-y-6 sm:space-y-8 animate-fade-in relative overflow-hidden">
           {/* Top Decorative Header Accent */}
           <div className="absolute top-0 inset-x-0 h-2 bg-gradient-to-r from-[#7B1436] via-[#C59048] to-[#122147]" />
 
           <div className="text-center space-y-3">
-            <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto shadow-inner">
-              <CheckCircle2 size={36} />
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto shadow-inner">
+              <CheckCircle2 size={32} />
             </div>
-            <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-[#7B1436]">
+            <h1 className="font-heading font-extrabold text-xl sm:text-2xl md:text-3xl text-[#7B1436] leading-snug">
               SHREYARTH — Application Submitted Successfully!
             </h1>
-            <p className="text-sm text-slate-600 max-w-md mx-auto">
+            <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto">
               Your scholarship application has been registered with the SHREYARTH portal for SMVITM Student Welfare Board (SWB).
             </p>
           </div>
 
           {/* Reference Card */}
-          <div className="p-6 rounded-2xl bg-gradient-to-br from-[#FAF8F5] to-[#F5F0E6] border-2 border-[#C59048]/40 shadow-sm text-center space-y-3">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#7B1436]">
+          <div className="p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-[#FAF8F5] to-[#F5F0E6] border-2 border-[#C59048]/40 shadow-sm text-center space-y-2 sm:space-y-3">
+            <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#7B1436]">
               Your Official Application Reference ID
             </span>
-            <div className="flex items-center justify-center gap-3">
-              <span className="font-mono font-black text-2xl sm:text-3xl text-slate-900 tracking-wider">
+            <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+              <span className="font-mono font-black text-xl sm:text-2xl md:text-3xl text-slate-900 tracking-wider break-all">
                 {submittedRef.applicationNumber}
               </span>
               <button
                 type="button"
                 onClick={copyRefToClipboard}
                 title="Copy Reference Number"
-                className="p-2 rounded-lg bg-white border border-[#C59048]/40 text-[#7B1436] hover:bg-[#FDF6E7] transition-colors"
+                className="p-2 rounded-xl bg-white border border-[#C59048]/40 text-[#7B1436] hover:bg-[#FDF6E7] transition-colors shadow-2xs"
               >
-                <Copy size={18} />
+                <Copy size={16} />
               </button>
             </div>
-            <p className="text-2xs text-slate-500">
+            <p className="text-[11px] sm:text-2xs text-slate-500">
               Please take a screenshot or note down this reference number for all future inquiries.
             </p>
           </div>
 
           {/* Summary Box */}
-          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-xs space-y-2.5">
-            <h3 className="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+          <div className="p-4 sm:p-5 rounded-2xl bg-slate-50 border border-slate-200 text-xs space-y-2.5">
+            <h3 className="font-bold text-slate-800 text-xs sm:text-sm flex items-center gap-1.5">
               <ShieldCheck size={16} className="text-[#7B1436]" />
               Submission Summary
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-600">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-600 text-xs">
               <div><strong className="text-slate-900">Student Name:</strong> {studentName}</div>
               <div><strong className="text-slate-900">USN:</strong> {usn.toUpperCase()}</div>
-              <div><strong className="text-slate-900">Branch & Sem:</strong> {department} ({semester})</div>
+              <div><strong className="text-slate-900">Branch &amp; Sem:</strong> {department} ({semester})</div>
               <div><strong className="text-slate-900">Caste / Category:</strong> {selectedCaste === '__OTHER__' ? customCasteInput : selectedCaste}</div>
               <div><strong className="text-slate-900">Family Income:</strong> ₹{Number(annualIncome).toLocaleString('en-IN')}/yr</div>
               <div><strong className="text-slate-900">Contact:</strong> {studentPhone}</div>
-              <div className="sm:col-span-2 flex items-center gap-1.5 overflow-hidden text-ellipsis">
-                <strong className="text-slate-900 flex-shrink-0">Document Drive:</strong>
+              <div className="sm:col-span-2 overflow-hidden text-ellipsis">
+                <strong className="text-slate-900 block sm:inline mr-1">Document Drive:</strong>
                 <a
                   href={documentsDriveLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline truncate inline-flex items-center gap-1"
+                  className="text-blue-600 hover:underline break-all inline-flex items-center gap-1"
                 >
                   <FolderOpen size={12} className="flex-shrink-0" />
-                  <span className="truncate">{documentsDriveLink}</span>
+                  <span className="break-all">{documentsDriveLink}</span>
                 </a>
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-[#E2D9CE]">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-4 border-t border-[#E2D9CE]">
             <button
               type="button"
               onClick={() => window.print()}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold text-xs flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-5 py-3 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold text-xs flex items-center justify-center gap-2 transition-colors"
             >
               <Printer size={15} />
               <span>Print Application Slip</span>
@@ -447,7 +447,7 @@ export default function StudentApplicationPage() {
                 setAnnualIncome('');
                 setStatementOfNeed('');
               }}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#7B1436] hover:bg-[#63102B] text-white font-semibold text-xs flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-[#7B1436] hover:bg-[#63102B] text-white font-semibold text-xs flex items-center justify-center gap-2 transition-colors shadow-sm"
             >
               <RefreshCw size={14} />
               <span>Submit Another Application</span>
@@ -459,21 +459,21 @@ export default function StudentApplicationPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F7F4EE] py-6 sm:py-10 px-4 sm:px-6">
-      <div className="max-w-3xl mx-auto space-y-6">
+    <div className="min-h-screen bg-[#F7F4EE] py-4 sm:py-8 md:py-10 px-3 sm:px-6">
+      <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
 
         {/* ── Top Institution Header Banner ── */}
-        <div className="bg-white rounded-3xl border border-[#E2D9CE] shadow-md overflow-hidden">
-          <div className="h-3 bg-gradient-to-r from-[#7B1436] via-[#C59048] to-[#122147]" />
-          <div className="p-6 sm:p-8 space-y-4">
-            <div className="flex items-center justify-between flex-wrap gap-4 border-b border-[#EAE3D9] pb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-[#7B1436] text-white flex items-center justify-center font-heading font-black text-sm shadow-md">
+        <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#E2D9CE] shadow-sm sm:shadow-md overflow-hidden">
+          <div className="h-2.5 sm:h-3 bg-gradient-to-r from-[#7B1436] via-[#C59048] to-[#122147]" />
+          <div className="p-4 sm:p-6 md:p-8 space-y-3.5 sm:space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 border-b border-[#EAE3D9] pb-3.5 sm:pb-4">
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#7B1436] text-white flex items-center justify-center font-heading font-black text-xs sm:text-sm shadow-md flex-shrink-0">
                   ॥ಶ್ರೇ॥
                 </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-heading font-black text-base text-[#7B1436] tracking-wider uppercase">
+                <div className="min-w-0">
+                  <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                    <span className="font-heading font-black text-sm sm:text-base text-[#7B1436] tracking-wider uppercase">
                       SHREYARTH
                     </span>
                     <span className="text-xs text-slate-400 font-semibold">•</span>
@@ -481,34 +481,34 @@ export default function StudentApplicationPage() {
                       SMVITM
                     </span>
                   </div>
-                  <h2 className="font-heading font-bold text-xs text-slate-700 uppercase tracking-wider mt-0.5">
+                  <h2 className="font-heading font-bold text-[10px] sm:text-xs text-slate-700 uppercase tracking-wider mt-0.5 line-clamp-2 sm:line-clamp-none">
                     Shri Madhwa Vadiraja Institute of Technology & Management
                   </h2>
-                  <p className="text-[11px] text-slate-500 font-medium">
-                    Vishwothama Nagar, Bantakal, Udupi — 574 115 (A Unit of SSVMET)
+                  <p className="text-[10px] sm:text-[11px] text-slate-500 font-medium">
+                    Vishwothama Nagar, Bantakal, Udupi — 574 115
                   </p>
                 </div>
               </div>
-              <div className="text-right">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FDF6E7] border border-[#C59048]/40 text-[#7B1436] text-[11px] font-bold">
-                  <Sparkles size={13} className="text-[#C59048]" />
+              <div className="self-start sm:self-auto">
+                <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full bg-[#FDF6E7] border border-[#C59048]/40 text-[#7B1436] text-[10px] sm:text-[11px] font-bold whitespace-nowrap">
+                  <Sparkles size={12} className="text-[#C59048]" />
                   SHREYARTH • SMVITM SWB 2026–27
                 </span>
               </div>
             </div>
 
             <div>
-              <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight">
+              <h1 className="font-heading font-extrabold text-lg sm:text-2xl md:text-3xl text-slate-900 tracking-tight leading-snug">
                 {config?.title || 'SHREYARTH — SMVITM Scholarship Application Form'}
               </h1>
-              <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-600 mt-1.5 sm:mt-2 leading-relaxed">
                 {config?.description || 'Shri Madhwa Vadiraja Institute of Technology & Management (SMVITM) — Student Welfare Board (SWB). Apply for institutional financial assistance, merit-cum-means aid, and endowed trust scholarships for the academic year 2026-27.'}
               </p>
             </div>
 
-            <div className="bg-[#FAF8F5] border border-[#E2D9CE] rounded-xl p-3 text-2xs text-[#7B1436] flex items-center gap-2">
-              <AlertCircle size={15} className="text-[#C59048] flex-shrink-0" />
-              <span>
+            <div className="bg-[#FAF8F5] border border-[#E2D9CE] rounded-xl p-2.5 sm:p-3 text-[11px] sm:text-2xs text-[#7B1436] flex items-start sm:items-center gap-2">
+              <AlertCircle size={15} className="text-[#C59048] flex-shrink-0 mt-0.5 sm:mt-0" />
+              <span className="leading-tight sm:leading-normal">
                 <strong>No Login Required:</strong> Provide accurate information as per college and government records. All details are subject to verification by the Student Welfare Board (SWB).
               </span>
             </div>
@@ -519,20 +519,20 @@ export default function StudentApplicationPage() {
         <form onSubmit={handleSubmit} className="space-y-6">
 
           {/* ════ SECTION 1: Personal & Academic Identification ════ */}
-          <div className="bg-white rounded-3xl border border-[#E2D9CE] shadow-sm p-6 sm:p-8 space-y-5">
-            <div className="flex items-center gap-2.5 pb-3 border-b border-[#EAE3D9]">
-              <div className="w-8 h-8 rounded-xl bg-[#FAF0F3] text-[#7B1436] flex items-center justify-center">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#E2D9CE] shadow-xs sm:shadow-sm p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-5">
+            <div className="flex items-center gap-2.5 pb-2.5 sm:pb-3 border-b border-[#EAE3D9]">
+              <div className="w-8 h-8 rounded-xl bg-[#FAF0F3] text-[#7B1436] flex items-center justify-center flex-shrink-0">
                 <User size={18} />
               </div>
               <div>
-                <h3 className="font-heading font-bold text-base text-[#7B1436]">
+                <h3 className="font-heading font-bold text-sm sm:text-base text-[#7B1436] leading-snug">
                   1. Student Identification & Academic Record
                 </h3>
-                <p className="text-2xs text-slate-500">Provide official details as registered in college</p>
+                <p className="text-[11px] sm:text-2xs text-slate-500">Provide official details as registered in college</p>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">
                   Full Name of the Student <span className="text-red-500">*</span>
@@ -543,7 +543,7 @@ export default function StudentApplicationPage() {
                   placeholder="e.g. Bhushan Poojary"
                   value={studentName}
                   onChange={(e) => setStudentName(e.target.value)}
-                  className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent"
+                  className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                 />
               </div>
 
@@ -557,7 +557,7 @@ export default function StudentApplicationPage() {
                   placeholder="e.g. 4MW23AD026"
                   value={usn}
                   onChange={(e) => setUsn(e.target.value.toUpperCase())}
-                  className="w-full text-xs font-mono uppercase px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent"
+                  className="w-full text-sm sm:text-xs font-mono uppercase px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                 />
               </div>
 
@@ -568,7 +568,7 @@ export default function StudentApplicationPage() {
                 <select
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
-                  className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent bg-white"
+                  className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent bg-white min-h-[42px] sm:min-h-[38px] transition-colors"
                 >
                   {DEPARTMENTS.map((d) => (
                     <option key={d} value={d}>{d}</option>
@@ -583,7 +583,7 @@ export default function StudentApplicationPage() {
                 <select
                   value={semester}
                   onChange={(e) => setSemester(e.target.value)}
-                  className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent bg-white"
+                  className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent bg-white min-h-[42px] sm:min-h-[38px] transition-colors"
                 >
                   {SEMESTERS.map((s) => (
                     <option key={s} value={s}>{s}</option>
@@ -604,7 +604,7 @@ export default function StudentApplicationPage() {
                     placeholder="e.g. 8.45"
                     value={cgpa}
                     onChange={(e) => setCgpa(e.target.value)}
-                    className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent"
+                    className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                   />
                 </div>
               )}
@@ -617,7 +617,7 @@ export default function StudentApplicationPage() {
                   <select
                     value={backlogStatus}
                     onChange={(e) => setBacklogStatus(e.target.value as BacklogStatus)}
-                    className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent bg-white"
+                    className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent bg-white min-h-[42px] sm:min-h-[38px] transition-colors"
                   >
                     {BACKLOG_OPTIONS.map((opt) => (
                       <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -639,7 +639,7 @@ export default function StudentApplicationPage() {
                     placeholder="e.g. 92.4"
                     value={sslcPercentage}
                     onChange={(e) => setSslcPercentage(e.target.value)}
-                    className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent"
+                    className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                   />
                 </div>
               )}
@@ -657,7 +657,7 @@ export default function StudentApplicationPage() {
                     placeholder="e.g. 88.0"
                     value={pucPercentage}
                     onChange={(e) => setPucPercentage(e.target.value)}
-                    className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent"
+                    className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                   />
                 </div>
               )}
@@ -665,29 +665,29 @@ export default function StudentApplicationPage() {
           </div>
 
           {/* ════ SECTION 2: Community Category & Family Support Structure ════ */}
-          <div className="bg-white rounded-3xl border border-[#E2D9CE] shadow-sm p-6 sm:p-8 space-y-5">
-            <div className="flex items-center gap-2.5 pb-3 border-b border-[#EAE3D9]">
-              <div className="w-8 h-8 rounded-xl bg-[#FDF6E7] text-[#C59048] flex items-center justify-center">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#E2D9CE] shadow-xs sm:shadow-sm p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-5">
+            <div className="flex items-center gap-2.5 pb-2.5 sm:pb-3 border-b border-[#EAE3D9]">
+              <div className="w-8 h-8 rounded-xl bg-[#FDF6E7] text-[#C59048] flex items-center justify-center flex-shrink-0">
                 <HeartHandshake size={18} />
               </div>
               <div>
-                <h3 className="font-heading font-bold text-base text-[#7B1436]">
+                <h3 className="font-heading font-bold text-sm sm:text-base text-[#7B1436] leading-snug">
                   2. Community Category &amp; Family Support Structure
                 </h3>
-                <p className="text-2xs text-slate-500">Confidential information used solely for institutional scholarship eligibility &amp; student welfare</p>
+                <p className="text-[11px] sm:text-2xs text-slate-500">Confidential information used solely for institutional scholarship eligibility &amp; student welfare</p>
               </div>
             </div>
 
             {/* Caste Selection with Dynamic "Other" */}
-            <div className="space-y-3 bg-[#FAF8F5] p-4 rounded-2xl border border-[#E2D9CE]">
-              <label className="block text-xs font-bold text-slate-800">
+            <div className="space-y-2.5 sm:space-y-3 bg-[#FAF8F5] p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border border-[#E2D9CE]">
+              <label className="block text-xs font-bold text-slate-800 leading-snug">
                 Select Your Caste / Community Category (for Endowment &amp; Trust Scholarships) <span className="text-red-500">*</span>
               </label>
               <select
                 required
                 value={selectedCaste}
                 onChange={(e) => setSelectedCaste(e.target.value)}
-                className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] bg-white font-medium"
+                className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] bg-white font-medium min-h-[42px] transition-colors"
               >
                 <option value="">-- Choose Caste / Community from List --</option>
                 {castes.map((c) => (
@@ -698,8 +698,8 @@ export default function StudentApplicationPage() {
 
               {/* Conditional Input if "Other" is chosen */}
               {selectedCaste === '__OTHER__' && (
-                <div className="p-3.5 rounded-xl bg-white border-2 border-[#C59048] shadow-sm space-y-1.5 animate-slide-up">
-                  <label className="block text-2xs font-bold text-[#7B1436] uppercase tracking-wider">
+                <div className="p-3 sm:p-3.5 rounded-xl bg-white border-2 border-[#C59048] shadow-sm space-y-1.5 animate-slide-up">
+                  <label className="block text-[11px] sm:text-2xs font-bold text-[#7B1436] uppercase tracking-wider">
                     Please Enter Your Caste / Community Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -708,9 +708,9 @@ export default function StudentApplicationPage() {
                     placeholder="e.g. Sali, Devanga, Padmashali, Arya Vysya, etc."
                     value={customCasteInput}
                     onChange={(e) => setCustomCasteInput(e.target.value)}
-                    className="w-full text-xs px-3.5 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436]"
+                    className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] min-h-[42px]"
                   />
-                  <p className="text-2xs text-slate-500">
+                  <p className="text-[11px] sm:text-2xs text-slate-500">
                     ℹ️ This caste will be recorded on your application and automatically added to the portal list.
                   </p>
                 </div>
@@ -719,14 +719,14 @@ export default function StudentApplicationPage() {
 
             {/* Family Living & Care Structure */}
             <div className="space-y-2">
-              <label className="block text-xs font-bold text-slate-800">
+              <label className="block text-xs font-bold text-slate-800 leading-snug">
                 Family Living &amp; Care Structure <span className="text-red-500">*</span>
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
                 {PARENT_STATUS_OPTIONS.map((opt) => (
                   <label
                     key={opt.value}
-                    className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
+                    className={`flex items-start gap-3 p-3 sm:p-3.5 rounded-xl border cursor-pointer transition-all ${
                       parentStatus === opt.value
                         ? 'border-[#7B1436] bg-[#FAF0F3] shadow-xs'
                         : 'border-slate-200 hover:border-slate-300 bg-white'
@@ -738,11 +738,11 @@ export default function StudentApplicationPage() {
                       value={opt.value}
                       checked={parentStatus === opt.value}
                       onChange={() => setParentStatus(opt.value)}
-                      className="mt-0.5 text-[#7B1436] focus:ring-[#7B1436]"
+                      className="mt-0.5 w-4 h-4 text-[#7B1436] focus:ring-[#7B1436] flex-shrink-0"
                     />
-                    <div>
-                      <span className="block text-xs font-bold text-slate-800">{opt.label}</span>
-                      <span className="block text-2xs text-slate-500">{opt.desc}</span>
+                    <div className="min-w-0">
+                      <span className="block text-xs font-bold text-slate-800 leading-snug">{opt.label}</span>
+                      <span className="block text-[11px] sm:text-2xs text-slate-500 mt-0.5 leading-snug">{opt.desc}</span>
                     </div>
                   </label>
                 ))}
@@ -750,7 +750,7 @@ export default function StudentApplicationPage() {
             </div>
 
             {/* Dynamic Conditional Occupations based on Family Care Structure */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-fade-in">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4 animate-fade-in">
               {/* Show Father's Occupation only if Both Parents or Single Parent (Father) */}
               {(parentStatus === 'both_alive' || parentStatus === 'single_father') && (
                 <div>
@@ -763,7 +763,7 @@ export default function StudentApplicationPage() {
                     placeholder="e.g. Agriculture / Daily Wage / Transport / Self-employed / Service"
                     value={fatherOccupation}
                     onChange={(e) => setFatherOccupation(e.target.value)}
-                    className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436]"
+                    className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                   />
                 </div>
               )}
@@ -780,7 +780,7 @@ export default function StudentApplicationPage() {
                     placeholder="e.g. Homemaker / Self-employed / Agriculture / Daily Wage / Service"
                     value={motherOccupation}
                     onChange={(e) => setMotherOccupation(e.target.value)}
-                    className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436]"
+                    className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                   />
                 </div>
               )}
@@ -797,14 +797,14 @@ export default function StudentApplicationPage() {
                     placeholder="e.g. Grandparent / Agriculture / Private / Relative Caregiver"
                     value={fatherOccupation}
                     onChange={(e) => setFatherOccupation(e.target.value)}
-                    className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436]"
+                    className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                   />
                 </div>
               )}
             </div>
 
             {/* Family Income & Siblings */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4">
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">
                   Annual Family Income (₹) <span className="text-red-500">*</span>
@@ -817,10 +817,10 @@ export default function StudentApplicationPage() {
                   placeholder="e.g. 60000"
                   value={annualIncome}
                   onChange={(e) => setAnnualIncome(e.target.value)}
-                  className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436]"
+                  className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                 />
                 {annualIncome && Number(annualIncome) > 0 && (
-                  <span className="text-2xs font-semibold text-[#7B1436] mt-1 block">
+                  <span className="text-[11px] sm:text-2xs font-semibold text-[#7B1436] mt-1 block">
                     ₹{Number(annualIncome).toLocaleString('en-IN')} / year
                   </span>
                 )}
@@ -837,7 +837,7 @@ export default function StudentApplicationPage() {
                     max="10"
                     value={siblingsTotal}
                     onChange={(e) => setSiblingsTotal(e.target.value)}
-                    className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436]"
+                    className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                   />
                 </div>
               )}
@@ -853,7 +853,7 @@ export default function StudentApplicationPage() {
                     max="10"
                     value={siblingsStudying}
                     onChange={(e) => setSiblingsStudying(e.target.value)}
-                    className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436]"
+                    className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                   />
                 </div>
               )}
@@ -861,32 +861,32 @@ export default function StudentApplicationPage() {
           </div>
 
           {/* ════ SECTION 3: Prior Scholarships & Statement of Need ════ */}
-          <div className="bg-white rounded-3xl border border-[#E2D9CE] shadow-sm p-6 sm:p-8 space-y-5">
-            <div className="flex items-center gap-2.5 pb-3 border-b border-[#EAE3D9]">
-              <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#E2D9CE] shadow-xs sm:shadow-sm p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-5">
+            <div className="flex items-center gap-2.5 pb-2.5 sm:pb-3 border-b border-[#EAE3D9]">
+              <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center flex-shrink-0">
                 <Coins size={18} />
               </div>
               <div>
-                <h3 className="font-heading font-bold text-base text-[#7B1436]">
-                  3. Prior Financial Aid & Statement of Hardship
+                <h3 className="font-heading font-bold text-sm sm:text-base text-[#7B1436] leading-snug">
+                  3. Prior Financial Aid &amp; Statement of Hardship
                 </h3>
-                <p className="text-2xs text-slate-500">Provide details of other financial aid received</p>
+                <p className="text-[11px] sm:text-2xs text-slate-500">Provide details of other financial aid received</p>
               </div>
             </div>
 
             {/* Prior Scholarship Toggle */}
-            <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E2D9CE] space-y-3">
-              <label className="block text-xs font-bold text-slate-800">
+            <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-[#FAF8F5] border border-[#E2D9CE] space-y-3">
+              <label className="block text-xs font-bold text-slate-800 leading-snug">
                 Did you receive any scholarship during the previous academic year? <span className="text-red-500">*</span>
               </label>
-              <div className="flex items-center gap-6">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-6">
                 <label className="inline-flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer">
                   <input
                     type="radio"
                     name="prevSch"
                     checked={!prevScholarshipReceived}
                     onChange={() => setPrevScholarshipReceived(false)}
-                    className="text-[#7B1436] focus:ring-[#7B1436]"
+                    className="w-4 h-4 text-[#7B1436] focus:ring-[#7B1436] flex-shrink-0"
                   />
                   <span>No (First time applicant / No prior scholarship)</span>
                 </label>
@@ -896,7 +896,7 @@ export default function StudentApplicationPage() {
                     name="prevSch"
                     checked={prevScholarshipReceived}
                     onChange={() => setPrevScholarshipReceived(true)}
-                    className="text-[#7B1436] focus:ring-[#7B1436]"
+                    className="w-4 h-4 text-[#7B1436] focus:ring-[#7B1436] flex-shrink-0"
                   />
                   <span>Yes (Received prior assistance)</span>
                 </label>
@@ -905,7 +905,7 @@ export default function StudentApplicationPage() {
               {prevScholarshipReceived && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                   <div>
-                    <label className="block text-2xs font-bold text-slate-700 mb-1">
+                    <label className="block text-[11px] sm:text-2xs font-bold text-slate-700 mb-1">
                       Scholarship Name(s) received (e.g. SSP, Vidyasiri, Jindal, SWB)
                     </label>
                     <input
@@ -913,11 +913,11 @@ export default function StudentApplicationPage() {
                       placeholder="e.g. State Scholarship Portal (SSP)"
                       value={prevScholarshipDetails}
                       onChange={(e) => setPrevScholarshipDetails(e.target.value)}
-                      className="w-full text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] bg-white"
+                      className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] bg-white min-h-[42px] sm:min-h-[38px] transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="block text-2xs font-bold text-slate-700 mb-1">
+                    <label className="block text-[11px] sm:text-2xs font-bold text-slate-700 mb-1">
                       Total Amount Received (₹)
                     </label>
                     <input
@@ -925,7 +925,7 @@ export default function StudentApplicationPage() {
                       placeholder="e.g. 18000"
                       value={prevScholarshipAmount}
                       onChange={(e) => setPrevScholarshipAmount(e.target.value)}
-                      className="w-full text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] bg-white"
+                      className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] bg-white min-h-[42px] sm:min-h-[38px] transition-colors"
                     />
                   </div>
                 </div>
@@ -934,10 +934,10 @@ export default function StudentApplicationPage() {
 
             {/* Statement of Financial Need & Educational Aspiration */}
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">
+              <label className="block text-xs font-bold text-slate-800 mb-1 leading-snug">
                 Personal Statement &amp; Financial Need <span className="text-red-500">*</span>
               </label>
-              <p className="text-2xs text-slate-500 mb-2">
+              <p className="text-[11px] sm:text-2xs text-slate-500 mb-2 leading-relaxed">
                 Please share your family situation, educational aspirations, and how receiving this institutional scholarship will assist your engineering journey at SMVITM.
               </p>
               <textarea
@@ -946,26 +946,26 @@ export default function StudentApplicationPage() {
                 value={statementOfNeed}
                 onChange={(e) => setStatementOfNeed(e.target.value)}
                 placeholder="Share your background, educational goals, and the financial assistance needed to support your studies..."
-                className="w-full text-xs p-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436]"
+                className="w-full text-sm sm:text-xs p-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] transition-colors"
               />
             </div>
           </div>
 
           {/* ════ SECTION 4: Contact & Residential Details ════ */}
-          <div className="bg-white rounded-3xl border border-[#E2D9CE] shadow-sm p-6 sm:p-8 space-y-5">
-            <div className="flex items-center gap-2.5 pb-3 border-b border-[#EAE3D9]">
-              <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#E2D9CE] shadow-xs sm:shadow-sm p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-5">
+            <div className="flex items-center gap-2.5 pb-2.5 sm:pb-3 border-b border-[#EAE3D9]">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center flex-shrink-0">
                 <Phone size={18} />
               </div>
               <div>
-                <h3 className="font-heading font-bold text-base text-[#7B1436]">
+                <h3 className="font-heading font-bold text-sm sm:text-base text-[#7B1436] leading-snug">
                   4. Contact &amp; Residential Details
                 </h3>
-                <p className="text-2xs text-slate-500">For scholarship committee communication and interview intimation</p>
+                <p className="text-[11px] sm:text-2xs text-slate-500">For scholarship committee communication and interview intimation</p>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">
                   Student Mobile Number (WhatsApp) <span className="text-red-500">*</span>
@@ -976,7 +976,7 @@ export default function StudentApplicationPage() {
                   placeholder="e.g. 9845012345"
                   value={studentPhone}
                   onChange={(e) => setStudentPhone(e.target.value)}
-                  className="w-full text-xs font-mono px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436]"
+                  className="w-full text-sm sm:text-xs font-mono px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                 />
               </div>
 
@@ -990,7 +990,7 @@ export default function StudentApplicationPage() {
                     placeholder="e.g. 9448012345"
                     value={parentPhone}
                     onChange={(e) => setParentPhone(e.target.value)}
-                    className="w-full text-xs font-mono px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436]"
+                    className="w-full text-sm sm:text-xs font-mono px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                   />
                 </div>
               )}
@@ -1005,7 +1005,7 @@ export default function StudentApplicationPage() {
                   placeholder="e.g. student.cs@smvitm.ac.in"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436]"
+                  className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                 />
               </div>
 
@@ -1019,7 +1019,7 @@ export default function StudentApplicationPage() {
                     placeholder="e.g. Karkala, Udupi / Kundapura / Belthangady"
                     value={talukDistrict}
                     onChange={(e) => setTalukDistrict(e.target.value)}
-                    className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436]"
+                    className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                   />
                 </div>
               )}
@@ -1034,7 +1034,7 @@ export default function StudentApplicationPage() {
                     placeholder="Door No, Street, Village/Town, Post, Pincode"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436]"
+                    className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                   />
                 </div>
               )}
@@ -1043,28 +1043,28 @@ export default function StudentApplicationPage() {
 
           {/* ════ SECTION 5: Original Supporting Documents (Google Drive Soft Copies) ════ */}
           {isFieldEnabled('documentsDriveLink') && (
-            <div className="bg-white rounded-3xl border border-[#E2D9CE] shadow-sm p-6 sm:p-8 space-y-5">
-              <div className="flex items-center gap-2.5 pb-3 border-b border-[#EAE3D9]">
-                <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
+            <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#E2D9CE] shadow-xs sm:shadow-sm p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-5">
+              <div className="flex items-center gap-2.5 pb-2.5 sm:pb-3 border-b border-[#EAE3D9]">
+                <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center flex-shrink-0">
                   <FolderOpen size={18} />
                 </div>
                 <div>
-                  <h3 className="font-heading font-bold text-base text-[#7B1436]">
+                  <h3 className="font-heading font-bold text-sm sm:text-base text-[#7B1436] leading-snug">
                     5. Supporting Documents Soft Copies (Google Drive Folder Link)
                   </h3>
-                  <p className="text-2xs text-slate-500">
+                  <p className="text-[11px] sm:text-2xs text-slate-500">
                     Upload clear scanned copies or clear photos of original certificates for committee verification
                   </p>
                 </div>
               </div>
 
               {/* Instruction Checklist Box */}
-              <div className="p-4 rounded-2xl bg-gradient-to-br from-[#FAF8F5] to-[#F5F0E6] border border-[#C59048]/40 space-y-3">
+              <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#FAF8F5] to-[#F5F0E6] border border-[#C59048]/40 space-y-3">
                 <div className="flex items-center gap-2 text-xs font-bold text-[#7B1436]">
-                  <FileCheck size={16} className="text-[#C59048]" />
+                  <FileCheck size={16} className="text-[#C59048] flex-shrink-0" />
                   <span>Original Documents to Include in Your Google Drive Folder:</span>
                 </div>
-                <ul className="text-2xs text-slate-700 space-y-1.5 list-disc list-inside">
+                <ul className="text-[11px] sm:text-2xs text-slate-700 space-y-1.5 list-disc list-inside leading-relaxed">
                   <li><strong>Academic Records:</strong> SSLC (10th) &amp; PUC (12th) / Diploma Marks Cards, plus all previous Engineering Semester Grade Cards.</li>
                   <li><strong>Income &amp; Caste Verification:</strong> Valid Income Certificate &amp; Caste Certificate issued by Govt of Karnataka (Tahasildar / Revenue Dept / Nadakacheri).</li>
                   <li><strong>College Documents:</strong> SMVITM Student ID Card &amp; latest College Fee Receipt.</li>
@@ -1072,9 +1072,9 @@ export default function StudentApplicationPage() {
                 </ul>
 
                 {/* Crucial Sharing Notice */}
-                <div className="p-3 rounded-xl bg-amber-50 border border-amber-300 text-2xs text-amber-900 space-y-1">
+                <div className="p-3 rounded-xl bg-amber-50 border border-amber-300 text-[11px] sm:text-2xs text-amber-900 space-y-1">
                   <div className="font-bold flex items-center gap-1.5">
-                    <AlertCircle size={13} className="text-amber-700 flex-shrink-0" />
+                    <AlertCircle size={14} className="text-amber-700 flex-shrink-0" />
                     <span>Important Link Sharing Setting:</span>
                   </div>
                   <p className="leading-relaxed">
@@ -1085,31 +1085,31 @@ export default function StudentApplicationPage() {
 
               {/* Input Field */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-bold text-slate-800">
+                <label className="block text-xs font-bold text-slate-800 leading-snug">
                   Google Drive Folder / Document Link <span className="text-red-500">*</span>
                 </label>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                   <input
                     type="url"
                     required
                     placeholder="https://drive.google.com/drive/folders/YOUR_FOLDER_ID"
                     value={documentsDriveLink}
                     onChange={(e) => setDocumentsDriveLink(e.target.value)}
-                    className="w-full text-xs font-mono px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436]"
+                    className="flex-1 w-full text-sm sm:text-xs font-mono px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] min-h-[42px] transition-colors"
                   />
                   {documentsDriveLink && documentsDriveLink.startsWith('http') && (
                     <a
                       href={documentsDriveLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-shrink-0 px-3 py-2.5 rounded-xl bg-[#FAF8F5] border border-[#E2D9CE] hover:bg-[#FDF6E7] text-xs font-semibold text-[#7B1436] flex items-center gap-1 transition-colors"
+                      className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-[#FAF8F5] border border-[#E2D9CE] hover:bg-[#FDF6E7] text-xs font-semibold text-[#7B1436] flex items-center justify-center gap-1.5 transition-colors shadow-2xs flex-shrink-0 min-h-[42px]"
                     >
                       <ExternalLink size={14} />
                       <span>Test Link</span>
                     </a>
                   )}
                 </div>
-                <p className="text-2xs text-slate-500">
+                <p className="text-[11px] sm:text-2xs text-slate-500">
                   Paste the shareable link of your Google Drive folder containing all original scanned certificates.
                 </p>
               </div>
@@ -1118,27 +1118,27 @@ export default function StudentApplicationPage() {
 
           {/* ════ SECTION 6: Dynamic Custom Questions Added by Admin ════ */}
           {dynamicCustomQuestions.length > 0 && (
-            <div className="bg-white rounded-3xl border border-[#E2D9CE] shadow-sm p-6 sm:p-8 space-y-5">
-              <div className="flex items-center gap-2.5 pb-3 border-b border-[#EAE3D9]">
-                <div className="w-8 h-8 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center">
+            <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#E2D9CE] shadow-xs sm:shadow-sm p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-5">
+              <div className="flex items-center gap-2.5 pb-2.5 sm:pb-3 border-b border-[#EAE3D9]">
+                <div className="w-8 h-8 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center flex-shrink-0">
                   <HelpCircle size={18} />
                 </div>
                 <div>
-                  <h3 className="font-heading font-bold text-base text-[#7B1436]">
+                  <h3 className="font-heading font-bold text-sm sm:text-base text-[#7B1436] leading-snug">
                     6. Additional Institutional Questions
                   </h3>
-                  <p className="text-2xs text-slate-500">Specific questions requested by the SWB administration</p>
+                  <p className="text-[11px] sm:text-2xs text-slate-500">Specific questions requested by the SWB administration</p>
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3.5 sm:space-y-4">
                 {dynamicCustomQuestions.map((field) => (
                   <div key={field.id} className="space-y-1.5">
-                    <label className="block text-xs font-bold text-slate-800">
+                    <label className="block text-xs font-bold text-slate-800 leading-snug">
                       {field.label} {field.required && <span className="text-red-500">*</span>}
                     </label>
                     {field.helpText && (
-                      <p className="text-2xs text-slate-500">{field.helpText}</p>
+                      <p className="text-[11px] sm:text-2xs text-slate-500">{field.helpText}</p>
                     )}
 
                     {field.type === 'text' && (
@@ -1148,7 +1148,7 @@ export default function StudentApplicationPage() {
                         placeholder={field.placeholder || ''}
                         value={customResponses[field.id] || ''}
                         onChange={(e) => handleCustomFieldChange(field.id, e.target.value)}
-                        className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-[#7B1436]"
+                        className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                       />
                     )}
 
@@ -1159,7 +1159,7 @@ export default function StudentApplicationPage() {
                         placeholder={field.placeholder || ''}
                         value={customResponses[field.id] || ''}
                         onChange={(e) => handleCustomFieldChange(field.id, e.target.value)}
-                        className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-[#7B1436]"
+                        className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                       />
                     )}
 
@@ -1170,7 +1170,7 @@ export default function StudentApplicationPage() {
                         placeholder={field.placeholder || ''}
                         value={customResponses[field.id] || ''}
                         onChange={(e) => handleCustomFieldChange(field.id, e.target.value)}
-                        className="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-[#7B1436]"
+                        className="w-full text-sm sm:text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-[#7B1436] bg-white transition-colors"
                       />
                     )}
 
@@ -1179,7 +1179,7 @@ export default function StudentApplicationPage() {
                         required={field.required}
                         value={customResponses[field.id] || ''}
                         onChange={(e) => handleCustomFieldChange(field.id, e.target.value)}
-                        className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-[#7B1436]"
+                        className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] transition-colors"
                       >
                         <option value="">-- Choose Option --</option>
                         {field.options?.map((opt: string) => (
@@ -1196,7 +1196,7 @@ export default function StudentApplicationPage() {
                             name={`dyn_${field.id}`}
                             checked={customResponses[field.id] === true}
                             onChange={() => handleCustomFieldChange(field.id, true)}
-                            className="text-[#7B1436]"
+                            className="w-4 h-4 text-[#7B1436] focus:ring-[#7B1436]"
                           />
                           <span>Yes</span>
                         </label>
@@ -1206,7 +1206,7 @@ export default function StudentApplicationPage() {
                             name={`dyn_${field.id}`}
                             checked={customResponses[field.id] === false}
                             onChange={() => handleCustomFieldChange(field.id, false)}
-                            className="text-[#7B1436]"
+                            className="w-4 h-4 text-[#7B1436] focus:ring-[#7B1436]"
                           />
                           <span>No</span>
                         </label>
@@ -1220,7 +1220,7 @@ export default function StudentApplicationPage() {
                         placeholder={field.placeholder || 'https://...'}
                         value={customResponses[field.id] || ''}
                         onChange={(e) => handleCustomFieldChange(field.id, e.target.value)}
-                        className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-[#7B1436]"
+                        className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
                       />
                     )}
                   </div>
@@ -1230,22 +1230,22 @@ export default function StudentApplicationPage() {
           )}
 
           {/* ════ Declaration & Submit Button ════ */}
-          <div className="bg-white rounded-3xl border border-[#E2D9CE] shadow-sm p-6 sm:p-8 space-y-5">
-            <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E2D9CE] text-xs text-slate-700 space-y-2">
-              <span className="font-bold text-slate-900 block">Student Undertaking / Declaration:</span>
-              <p className="text-2xs leading-relaxed text-slate-600">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#E2D9CE] shadow-xs sm:shadow-sm p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-5">
+            <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-[#FAF8F5] border border-[#E2D9CE] text-xs text-slate-700 space-y-2">
+              <span className="font-bold text-slate-900 block text-xs sm:text-sm">Student Undertaking / Declaration:</span>
+              <p className="text-[11px] sm:text-2xs leading-relaxed text-slate-600">
                 I hereby declare that all information furnished above regarding my academic performance, caste, annual family income, and circumstances is true to the best of my knowledge and belief. I understand that any false statement will result in immediate disqualification and disciplinary action.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-              <span className="text-2xs text-slate-500">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 pt-2">
+              <span className="text-[11px] sm:text-2xs text-slate-500 text-center sm:text-left">
                 By clicking Submit, your application will be securely forwarded to the SWB Committee.
               </span>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-[#7B1436] hover:bg-[#63102B] disabled:opacity-50 text-white font-heading font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-xl sm:rounded-2xl bg-[#7B1436] hover:bg-[#63102B] disabled:opacity-50 text-white font-heading font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 flex-shrink-0 min-h-[48px]"
               >
                 {isSubmitting ? (
                   <>

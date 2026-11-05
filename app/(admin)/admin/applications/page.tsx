@@ -546,20 +546,20 @@ export default function ApplicationsManagementPage() {
 
       {/* ─── MODAL: FULL CANDIDATE DOSSIER ─── */}
       {selectedApp && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-3xl border border-[#C59048]/40 shadow-2xl w-full max-w-2xl max-h-[92vh] flex flex-col overflow-hidden animate-slide-up">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#C59048]/40 shadow-2xl w-full max-w-2xl max-h-[92vh] flex flex-col overflow-hidden animate-slide-up">
             
             {/* Modal Header */}
-            <div className="px-6 py-4 bg-gradient-to-r from-[#7B1436] to-[#5C0F28] text-white flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center font-bold text-sm">
+            <div className="px-4 sm:px-6 py-3.5 sm:py-4 bg-gradient-to-r from-[#7B1436] to-[#5C0F28] text-white flex items-center justify-between">
+              <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 flex items-center justify-center font-bold text-xs sm:text-sm flex-shrink-0">
                   {selectedApp.studentName.slice(0, 2).toUpperCase()}
                 </div>
-                <div>
-                  <h3 className="font-heading font-bold text-base leading-tight">
+                <div className="min-w-0">
+                  <h3 className="font-heading font-bold text-sm sm:text-base leading-tight truncate">
                     {selectedApp.studentName}
                   </h3>
-                  <div className="flex items-center gap-2 text-white/80 text-xs font-mono">
+                  <div className="flex items-center gap-1.5 sm:gap-2 text-white/80 text-[11px] sm:text-xs font-mono flex-wrap">
                     <span>{selectedApp.usn}</span>
                     <span>•</span>
                     <span>Ref: {selectedApp.applicationNumber}</span>
@@ -568,14 +568,14 @@ export default function ApplicationsManagementPage() {
               </div>
               <button
                 onClick={() => setSelectedApp(null)}
-                className="p-1 rounded-lg hover:bg-white/10 text-white/80 hover:text-white"
+                className="p-1 rounded-lg hover:bg-white/10 text-white/80 hover:text-white flex-shrink-0"
               >
                 <X size={20} />
               </button>
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 space-y-5 overflow-y-auto flex-1 text-xs text-slate-700">
+            <div className="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto flex-1 text-xs text-slate-700">
 
               {/* Status & Quick Tags */}
               <div className="flex items-center justify-between flex-wrap gap-2 p-3 rounded-2xl bg-[#FAF8F5] border border-[#E2D9CE]">

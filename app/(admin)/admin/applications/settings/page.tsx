@@ -364,7 +364,7 @@ export default function ApplicationSettingsPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <button
             type="button"
             onClick={handleResetDefaults}
@@ -387,7 +387,7 @@ export default function ApplicationSettingsPage() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-5 py-2.5 rounded-xl bg-[#7B1436] hover:bg-[#63102B] disabled:opacity-50 text-white font-heading font-bold text-xs flex items-center gap-2 shadow-sm transition-all"
+            className="px-5 py-2.5 rounded-xl bg-[#7B1436] hover:bg-[#63102B] disabled:opacity-50 text-white font-heading font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all"
           >
             {saving ? (
               <>
@@ -405,7 +405,7 @@ export default function ApplicationSettingsPage() {
       </div>
 
       {/* ── Tabs Navigation ── */}
-      <div className="flex items-center gap-2 border-b border-[#E2D9CE] pb-1">
+      <div className="flex items-center gap-2 border-b border-[#E2D9CE] pb-1 overflow-x-auto whitespace-nowrap scrollbar-none">
         <button
           type="button"
           onClick={() => setActiveTab('questions')}
@@ -490,19 +490,19 @@ export default function ApplicationSettingsPage() {
             return (
               <div key={section.key} className="space-y-3">
                 {/* Section Header Card */}
-                <div className="px-5 py-3 rounded-2xl bg-gradient-to-r from-[#FAF8F5] to-[#F5F0E6] border border-[#E2D9CE] flex items-center justify-between">
+                <div className="px-4 sm:px-5 py-3 rounded-2xl bg-gradient-to-r from-[#FAF8F5] to-[#F5F0E6] border border-[#E2D9CE] flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-lg bg-white text-[#7B1436] flex items-center justify-center shadow-2xs">
+                    <div className="w-7 h-7 rounded-lg bg-white text-[#7B1436] flex items-center justify-center shadow-2xs flex-shrink-0">
                       <SectionIcon size={16} />
                     </div>
                     <div>
                       <h2 className="font-heading font-bold text-xs text-[#7B1436]">
                         {section.title}
                       </h2>
-                      <p className="text-2xs text-slate-500">{section.desc}</p>
+                      <p className="text-[11px] sm:text-2xs text-slate-500">{section.desc}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 self-end sm:self-auto">
                     <Badge variant="default">{sectionFields.length} Questions</Badge>
                     <button
                       type="button"
@@ -511,7 +511,7 @@ export default function ApplicationSettingsPage() {
                         setNewFieldSection(section.key);
                         setShowAddModal(true);
                       }}
-                      className="px-2.5 py-1 rounded-lg bg-white border border-[#E2D9CE] hover:bg-[#FAF8F5] text-xs font-bold text-[#7B1436] flex items-center gap-1"
+                      className="px-2.5 py-1 rounded-lg bg-white border border-[#E2D9CE] hover:bg-[#FAF8F5] text-xs font-bold text-[#7B1436] flex items-center gap-1 shadow-2xs"
                     >
                       <Plus size={12} />
                       <span>Add in Section</span>
@@ -520,7 +520,7 @@ export default function ApplicationSettingsPage() {
                 </div>
 
                 {/* Questions within this Section */}
-                <div className="space-y-3 pl-2">
+                <div className="space-y-3 pl-0 sm:pl-2">
                   {sectionFields.map((field) => (
                     <div
                       key={field.id}
@@ -882,13 +882,13 @@ export default function ApplicationSettingsPage() {
 
       {/* ── MODAL: ADD NEW QUESTION (GOOGLE FORMS STYLE) ── */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-3xl border border-[#C59048]/40 shadow-2xl w-full max-w-xl flex flex-col overflow-hidden animate-slide-up">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#C59048]/40 shadow-2xl w-full max-w-xl flex flex-col overflow-hidden animate-slide-up">
             
-            <div className="px-6 py-4 bg-gradient-to-r from-[#7B1436] to-[#5C0F28] text-white flex items-center justify-between">
+            <div className="px-4 sm:px-6 py-3.5 sm:py-4 bg-gradient-to-r from-[#7B1436] to-[#5C0F28] text-white flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Plus size={18} className="text-[#F3DE98]" />
-                <h3 className="font-heading font-bold text-base leading-tight">
+                <h3 className="font-heading font-bold text-sm sm:text-base leading-tight">
                   {insertAfterFieldId ? 'Insert Question Directly Below' : 'Add New Question to Form'}
                 </h3>
               </div>
@@ -903,7 +903,7 @@ export default function ApplicationSettingsPage() {
               </button>
             </div>
 
-            <div className="p-6 space-y-4 text-xs text-slate-700 overflow-y-auto max-h-[80vh]">
+            <div className="p-4 sm:p-6 space-y-4 text-xs text-slate-700 overflow-y-auto max-h-[80vh]">
               <div>
                 <label className="block text-2xs font-bold text-slate-700 mb-1">
                   Question Title / Prompt <span className="text-red-500">*</span>
