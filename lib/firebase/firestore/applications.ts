@@ -372,9 +372,9 @@ export const DEFAULT_FORM_FIELDS: FormFieldConfig[] = [
 const DEFAULT_CONFIG: ApplicationFormConfig = {
   isOpen: true,
   academicYear: '2026-27',
-  title: 'SMVITM Institutional Scholarship Registration',
-  description: 'Apply for institutional aid, SWB financial assistance, and endowed trust scholarships for the academic year 2026-27. No student login required.',
-  closedMessage: 'Scholarship applications for the current cycle are now closed. For further assistance or urgent inquiries, please contact the Student Welfare Board (SWB) office.',
+  title: 'SHREYARTH — SMVITM Scholarship Application Form',
+  description: 'Shri Madhwa Vadiraja Institute of Technology & Management (SMVITM) — Student Welfare Board (SWB). Apply for institutional financial assistance, merit-cum-means aid, and endowed trust scholarships for the academic year 2026-27. No student login required.',
+  closedMessage: 'Scholarship applications for the current cycle are now closed. For further assistance or urgent inquiries, please contact the Student Welfare Board (SWB) office at SMVITM Bantakal.',
   allowedCastes: DEFAULT_CASTES,
   fields: DEFAULT_FORM_FIELDS,
   customFields: [],
@@ -397,19 +397,10 @@ export async function getFormConfig(): Promise<ApplicationFormConfig> {
       ...(data.allowedCastes || []),
     ]));
 
-    // If saved fields exist, use them while ensuring any missing default fields are preserved
+    // If saved fields exist, use them as configured by admin (respecting any deletions or additions)
     let mergedFields = DEFAULT_FORM_FIELDS;
     if (data.fields && Array.isArray(data.fields) && data.fields.length > 0) {
-      const savedMap = new Map(data.fields.map((f) => [f.id, f]));
-      // Keep saved settings, and include any saved custom questions
       mergedFields = data.fields;
-
-      // Ensure any core default fields not in saved config are appended
-      DEFAULT_FORM_FIELDS.forEach((def) => {
-        if (!savedMap.has(def.id)) {
-          mergedFields.push(def);
-        }
-      });
     }
 
     return {

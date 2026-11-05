@@ -316,7 +316,7 @@ export default function StudentApplicationPage() {
         <div className="text-center space-y-4 animate-fade-in">
           <div className="w-14 h-14 border-4 border-[#7B1436] border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="font-heading font-semibold text-[#7B1436] text-lg">
-            Loading SMVITM Scholarship Application Form...
+            Loading SHREYARTH — SMVITM Scholarship Application Form...
           </p>
         </div>
       </div>
@@ -368,10 +368,10 @@ export default function StudentApplicationPage() {
               <CheckCircle2 size={36} />
             </div>
             <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-[#7B1436]">
-              Application Submitted Successfully!
+              SHREYARTH — Application Submitted Successfully!
             </h1>
             <p className="text-sm text-slate-600 max-w-md mx-auto">
-              Your scholarship application has been registered with the SMVITM Student Welfare Board (SWB).
+              Your scholarship application has been registered with the SHREYARTH portal for SMVITM Student Welfare Board (SWB).
             </p>
           </div>
 
@@ -468,11 +468,20 @@ export default function StudentApplicationPage() {
           <div className="p-6 sm:p-8 space-y-4">
             <div className="flex items-center justify-between flex-wrap gap-4 border-b border-[#EAE3D9] pb-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-[#7B1436] text-white flex items-center justify-center font-heading font-black text-xl shadow-md">
-                  SMV
+                <div className="w-12 h-12 rounded-2xl bg-[#7B1436] text-white flex items-center justify-center font-heading font-black text-sm shadow-md">
+                  ॥ಶ್ರೇ॥
                 </div>
                 <div>
-                  <h2 className="font-heading font-bold text-xs sm:text-sm text-[#7B1436] uppercase tracking-wider">
+                  <div className="flex items-center gap-2">
+                    <span className="font-heading font-black text-base text-[#7B1436] tracking-wider uppercase">
+                      SHREYARTH
+                    </span>
+                    <span className="text-xs text-slate-400 font-semibold">•</span>
+                    <span className="font-heading font-bold text-xs text-slate-700 uppercase tracking-wide">
+                      SMVITM
+                    </span>
+                  </div>
+                  <h2 className="font-heading font-bold text-xs text-slate-700 uppercase tracking-wider mt-0.5">
                     Shri Madhwa Vadiraja Institute of Technology & Management
                   </h2>
                   <p className="text-[11px] text-slate-500 font-medium">
@@ -483,17 +492,17 @@ export default function StudentApplicationPage() {
               <div className="text-right">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FDF6E7] border border-[#C59048]/40 text-[#7B1436] text-[11px] font-bold">
                   <Sparkles size={13} className="text-[#C59048]" />
-                  SWB Portal 2026–27
+                  SHREYARTH • SMVITM SWB 2026–27
                 </span>
               </div>
             </div>
 
             <div>
               <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight">
-                {config?.title || 'Scholarship & Financial Aid Registration'}
+                {config?.title || 'SHREYARTH — SMVITM Scholarship Application Form'}
               </h1>
               <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
-                {config?.description || 'Students seeking college-level financial aid, merit-cum-means assistance, and community endowment scholarships should fill this registration form.'}
+                {config?.description || 'Shri Madhwa Vadiraja Institute of Technology & Management (SMVITM) — Student Welfare Board (SWB). Apply for institutional financial assistance, merit-cum-means aid, and endowed trust scholarships for the academic year 2026-27.'}
               </p>
             </div>
 

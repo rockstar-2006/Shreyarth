@@ -58,7 +58,7 @@ export default function ApplicationSettingsPage() {
   // Form Config State
   const [isOpen, setIsOpen] = useState(true);
   const [academicYear, setAcademicYear] = useState('2026-27');
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState('SHREYARTH — SMVITM Scholarship Application Form');
   const [description, setDescription] = useState('');
   const [closedMessage, setClosedMessage] = useState('');
   const [allowedCastes, setAllowedCastes] = useState<string[]>(DEFAULT_CASTES);
@@ -89,7 +89,7 @@ export default function ApplicationSettingsPage() {
         const cfg = await getFormConfig();
         setIsOpen(cfg.isOpen);
         setAcademicYear(cfg.academicYear);
-        setTitle(cfg.title);
+        setTitle(cfg.title || 'SHREYARTH — SMVITM Scholarship Application Form');
         setDescription(cfg.description);
         setClosedMessage(cfg.closedMessage);
         setAllowedCastes(cfg.allowedCastes);
@@ -353,7 +353,7 @@ export default function ApplicationSettingsPage() {
           </Link>
           <div className="flex items-center gap-2">
             <h1 className="font-heading font-extrabold text-2xl text-[#7B1436]">
-              Scholarship Application Form Editor
+              SHREYARTH — Scholarship Application Form Editor
             </h1>
             <span className="px-2.5 py-0.5 rounded-full bg-[#FAF0F3] text-[#7B1436] font-bold text-xs border border-[#7B1436]/20">
               Google Forms Style
