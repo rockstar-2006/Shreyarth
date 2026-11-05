@@ -283,8 +283,15 @@ export default function HomePage() {
               FAQ
             </a>
             <Link
+              href="/apply"
+              className="ml-2 inline-flex items-center gap-1.5 rounded-full border border-[#C59048]/50 bg-[#FDF6E7] px-4 py-2 text-xs font-bold text-[#7B1436] hover:bg-[#F5EDD8] transition-colors shadow-2xs"
+            >
+              <Sparkles className="h-3.5 w-3.5 text-[#C59048]" />
+              Apply Now (No Login)
+            </Link>
+            <Link
               href="/login"
-              className="ml-3 inline-flex items-center rounded-full bg-[#7B1436] px-5 py-2.5 text-sm font-medium text-white shadow-sm transition hover:opacity-95 hover:shadow-md cursor-pointer"
+              className="ml-2 inline-flex items-center rounded-full bg-[#7B1436] px-5 py-2.5 text-sm font-medium text-white shadow-sm transition hover:opacity-95 hover:shadow-md cursor-pointer"
             >
               Sign in
             </Link>
@@ -332,9 +339,16 @@ export default function HomePage() {
               How it works
             </a>
             <Link
+              href="/apply"
+              onClick={() => setMobileOpen(false)}
+              className="block rounded-xl px-4 py-2 text-sm font-bold text-[#7B1436] bg-[#FDF6E7] border border-[#C59048]/40"
+            >
+              ✦ Apply for Scholarship (No Login)
+            </Link>
+            <Link
               href="/login"
               onClick={() => setMobileOpen(false)}
-              className="block w-full text-center rounded-full bg-[#7B1436] px-5 py-2.5 text-sm font-medium text-white mt-3"
+              className="block w-full text-center rounded-full bg-[#7B1436] px-5 py-2.5 text-sm font-medium text-white mt-2"
             >
               Sign in
             </Link>
@@ -364,21 +378,22 @@ export default function HomePage() {
               </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-3">
-                <a
-                  href="#scholarships"
-                  className="group inline-flex items-center gap-2 rounded-full bg-[#7B1436] px-6 py-3 text-sm font-medium text-white shadow-lg shadow-[#7B1436]/20 transition hover:-translate-y-0.5 hover:shadow-xl cursor-pointer"
+                <Link
+                  href="/apply"
+                  className="group inline-flex items-center gap-2 rounded-full bg-[#7B1436] px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#7B1436]/25 transition hover:-translate-y-0.5 hover:shadow-xl cursor-pointer"
                 >
-                  Find a scholarship
+                  <Sparkles className="h-4 w-4 text-[#F3DE98]" />
+                  <span>Apply for Scholarship (Student Form)</span>
                   <ArrowRight
                     className="h-4 w-4 transition group-hover:translate-x-0.5"
                     aria-hidden="true"
                   />
-                </a>
+                </Link>
                 <a
-                  href="#how-it-works"
-                  className="inline-flex items-center gap-2 rounded-full border border-[#E9DED8] bg-white px-6 py-3 text-sm font-medium text-[#34252D] transition hover:border-[#7B1436]/40 cursor-pointer"
+                  href="#scholarships"
+                  className="inline-flex items-center gap-2 rounded-full border border-[#E9DED8] bg-white px-6 py-3.5 text-sm font-medium text-[#34252D] transition hover:border-[#7B1436]/40 cursor-pointer"
                 >
-                  How it works
+                  Browse Schemes
                 </a>
               </div>
 

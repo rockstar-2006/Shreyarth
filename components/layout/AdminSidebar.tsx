@@ -11,6 +11,7 @@ import {
   ExternalLink, 
   ChevronRight,
   FileSpreadsheet,
+  ClipboardList,
   type LucideIcon
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -68,6 +69,15 @@ const navItems: NavItem[] = [
     description: 'Excel sheet upload & student records',
     icon: FileSpreadsheet,
     badge: 'Excel Registry',
+  },
+  {
+    href: '/admin/applications',
+    label: 'Student Applications',
+    kannadaLabel: 'ಅರ್ಜಿ ಸಲ್ಲಿಕೆಗಳು',
+    categoryTag: 'FORM',
+    description: 'Review public Google-form registrations',
+    icon: ClipboardList,
+    badge: 'Self-Registered',
   },
   {
     href: '/admin/users',

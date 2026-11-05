@@ -1,7 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Public paths that don't require authentication
-const PUBLIC_PATHS = ['/login', '/api/auth/session', '/_next', '/favicon.ico', '/smvitm-logo'];
+const PUBLIC_PATHS = [
+  '/login',
+  '/apply',
+  '/api/apply',
+  '/api/auth/session',
+  '/_next',
+  '/favicon.ico',
+  '/smvitm-logo',
+];
 
 // Role → allowed path prefixes
 const ROLE_PATHS: Record<string, string[]> = {
