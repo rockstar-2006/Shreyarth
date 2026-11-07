@@ -90,6 +90,7 @@ export const DEFAULT_FORM_FIELDS: FormFieldConfig[] = [
     enabled: true,
     canDelete: false,
     options: [
+      'Artificial Intelligence & Machine Learning (AI & ML)',
       'Artificial Intelligence & Data Science (AI & DS)',
       'Computer Science & Engineering (CSE)',
       'Computer Science & Design (CSD)',
@@ -400,7 +401,22 @@ export async function getFormConfig(): Promise<ApplicationFormConfig> {
     // If saved fields exist, use them as configured by admin (respecting any deletions or additions)
     let mergedFields = DEFAULT_FORM_FIELDS;
     if (data.fields && Array.isArray(data.fields) && data.fields.length > 0) {
-      mergedFields = data.fields;
+      mergedFields = data.fields.map((f) => {
+        if (f.id === 'department' && Array.isArray(f.options)) {
+          const hasAIML = f.options.some((o) =>
+            o.toLowerCase().includes('machine learning') ||
+            o.toLowerCase().includes('ai & ml') ||
+            o.toLowerCase() === 'aiml'
+          );
+          if (!hasAIML) {
+            return {
+              ...f,
+              options: ['Artificial Intelligence & Machine Learning (AI & ML)', ...f.options],
+            };
+          }
+        }
+        return f;
+      });
     }
 
     return {

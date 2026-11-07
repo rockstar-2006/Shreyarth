@@ -35,6 +35,7 @@ import {
 import toast from 'react-hot-toast';
 
 const DEPARTMENTS = [
+  'Artificial Intelligence & Machine Learning (AI & ML)',
   'Artificial Intelligence & Data Science (AI & DS)',
   'Computer Science & Engineering (CSE)',
   'Computer Science & Design (CSD)',
@@ -163,6 +164,57 @@ export default function StudentApplicationPage() {
     return f ? f.required : false;
   };
 
+  const getFieldLabel = (fieldId: string, fallback: string) => {
+    const f = config?.fields?.find((item) => item.id === fieldId);
+    return f?.label?.trim() ? f.label : fallback;
+  };
+
+  const getFieldPlaceholder = (fieldId: string, fallback: string) => {
+    const f = config?.fields?.find((item) => item.id === fieldId);
+    return f?.placeholder?.trim() ? f.placeholder : fallback;
+  };
+
+  // Dynamic dropdown options synchronized with Admin Google Forms configuration
+  const departmentOptions = useMemo(() => {
+    const configured = config?.fields?.find((f) => f.id === 'department')?.options;
+    if (configured && configured.length > 0) {
+      const aiml = 'Artificial Intelligence & Machine Learning (AI & ML)';
+      if (!configured.some(d => d.toLowerCase().includes('machine learning') || d.toLowerCase().includes('ai & ml') || d.toLowerCase() === 'aiml')) {
+        return [aiml, ...configured];
+      }
+      return configured;
+    }
+    return DEPARTMENTS;
+  }, [config]);
+
+  const semesterOptions = useMemo(() => {
+    const configured = config?.fields?.find((f) => f.id === 'semester')?.options;
+    if (configured && configured.length > 0) return configured;
+    return SEMESTERS;
+  }, [config]);
+
+  const backlogOptions = useMemo(() => {
+    const configured = config?.fields?.find((f) => f.id === 'backlogStatus')?.options;
+    if (configured && configured.length > 0) {
+      return configured.map((opt) => {
+        let val: BacklogStatus = 'all_cleared_first_attempt';
+        const lower = opt.toLowerCase();
+        if (lower.includes('past') || lower.includes('cleared (currently 0')) val = 'past_cleared';
+        else if (lower.includes('1 to 2') || lower.includes('1-2')) val = 'active_1_2';
+        else if (lower.includes('3 or more') || lower.includes('3+')) val = 'active_3_plus';
+        return { value: val, label: opt };
+      });
+    }
+    return BACKLOG_OPTIONS;
+  }, [config]);
+
+  // Keep selected department aligned with available options
+  useEffect(() => {
+    if (departmentOptions.length > 0 && !departmentOptions.includes(department)) {
+      setDepartment(departmentOptions[0]);
+    }
+  }, [departmentOptions, department]);
+
   // Additional dynamic questions added by admin in Google Forms editor
   const dynamicCustomQuestions = useMemo(() => {
     const list: any[] = [];
@@ -225,16 +277,16 @@ export default function StudentApplicationPage() {
       toast.error('Please enter a valid email address');
       return;
     }
-    if (isFieldEnabled('statementOfNeed') && (!statementOfNeed.trim() || statementOfNeed.trim().length < 15)) {
-      toast.error('Please write a brief statement describing your financial circumstances & need');
-      return;
+    let finalDriveLink = documentsDriveLink.trim();
+    if (finalDriveLink && !finalDriveLink.startsWith('http://') && !finalDriveLink.startsWith('https://')) {
+      finalDriveLink = 'https://' + finalDriveLink;
     }
-    if (isFieldEnabled('documentsDriveLink') && !documentsDriveLink.trim()) {
+    if (isFieldEnabled('documentsDriveLink') && isFieldRequired('documentsDriveLink') && !finalDriveLink) {
       toast.error('Please provide the Google Drive link containing soft copies of your original documents');
       return;
     }
-    if (isFieldEnabled('documentsDriveLink') && !documentsDriveLink.toLowerCase().startsWith('http')) {
-      toast.error('Google Drive link must be a valid URL starting with https://');
+    if (isFieldEnabled('statementOfNeed') && isFieldRequired('statementOfNeed') && (!statementOfNeed.trim() || statementOfNeed.trim().length < 10)) {
+      toast.error('Please write a brief statement describing your financial circumstances & need');
       return;
     }
 
@@ -287,7 +339,7 @@ export default function StudentApplicationPage() {
         email: email.trim(),
         talukDistrict: talukDistrict.trim(),
         address: address.trim(),
-        documentsDriveLink: documentsDriveLink.trim(),
+        documentsDriveLink: finalDriveLink,
         statementOfNeed: statementOfNeed.trim(),
         customFields: customResponses,
       });
@@ -563,14 +615,14 @@ export default function StudentApplicationPage() {
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">
-                  Branch / Department <span className="text-red-500">*</span>
+                  {getFieldLabel('department', 'Branch / Department')} <span className="text-red-500">*</span>
                 </label>
                 <select
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
                   className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent bg-white min-h-[42px] sm:min-h-[38px] transition-colors"
                 >
-                  {DEPARTMENTS.map((d) => (
+                  {departmentOptions.map((d) => (
                     <option key={d} value={d}>{d}</option>
                   ))}
                 </select>
@@ -578,14 +630,14 @@ export default function StudentApplicationPage() {
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">
-                  Current Semester <span className="text-red-500">*</span>
+                  {getFieldLabel('semester', 'Current Semester')} <span className="text-red-500">*</span>
                 </label>
                 <select
                   value={semester}
                   onChange={(e) => setSemester(e.target.value)}
                   className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent bg-white min-h-[42px] sm:min-h-[38px] transition-colors"
                 >
-                  {SEMESTERS.map((s) => (
+                  {semesterOptions.map((s) => (
                     <option key={s} value={s}>{s}</option>
                   ))}
                 </select>
@@ -595,18 +647,18 @@ export default function StudentApplicationPage() {
                 <div>
                   <div className="flex items-center justify-between mb-1">
                     <label className="block text-xs font-bold text-slate-700">
-                      Current Engineering CGPA
+                      {getFieldLabel('cgpa', 'Current Engineering CGPA')}
                     </label>
                     <span className="text-[10px] text-slate-500 font-medium">
-                      Optional (Leave blank if 1st Sem)
+                      {isFieldRequired('cgpa') ? 'Required' : 'Optional (Leave blank if 1st Sem)'}
                     </span>
                   </div>
                   <input
                     type="number"
-                    step="0.01"
+                    step="any"
                     min="0"
                     max="10"
-                    placeholder={semester === '1st Sem' ? 'Leave blank (1st Sem exams awaited)' : 'e.g. 8.45'}
+                    placeholder={semester === '1st Sem' ? 'Leave blank (1st Sem exams awaited)' : getFieldPlaceholder('cgpa', 'e.g. 8.45')}
                     value={cgpa}
                     onChange={(e) => setCgpa(e.target.value)}
                     className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
@@ -622,15 +674,15 @@ export default function StudentApplicationPage() {
               {isFieldEnabled('backlogStatus') && (
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1">
-                    Backlog Status History <span className="text-red-500">*</span>
+                    {getFieldLabel('backlogStatus', 'Backlog History Status')} <span className="text-red-500">*</span>
                   </label>
                   <select
                     value={backlogStatus}
                     onChange={(e) => setBacklogStatus(e.target.value as BacklogStatus)}
                     className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent bg-white min-h-[42px] sm:min-h-[38px] transition-colors"
                   >
-                    {BACKLOG_OPTIONS.map((opt) => (
-                      <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    {backlogOptions.map((opt) => (
+                      <option key={opt.label} value={opt.value}>{opt.label}</option>
                     ))}
                   </select>
                 </div>
@@ -639,14 +691,14 @@ export default function StudentApplicationPage() {
               {isFieldEnabled('sslcPercentage') && (
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1">
-                    10th (SSLC) Percentage (%)
+                    {getFieldLabel('sslcPercentage', '10th (SSLC) Percentage (%)')}
                   </label>
                   <input
                     type="number"
-                    step="0.1"
+                    step="any"
                     min="0"
                     max="100"
-                    placeholder="e.g. 92.4"
+                    placeholder={getFieldPlaceholder('sslcPercentage', 'e.g. 92.4')}
                     value={sslcPercentage}
                     onChange={(e) => setSslcPercentage(e.target.value)}
                     className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
@@ -656,6 +708,21 @@ export default function StudentApplicationPage() {
 
               {isFieldEnabled('pucPercentage') && (
                 <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    {getFieldLabel('pucPercentage', '12th (PUC / Diploma) Percentage (%)')}
+                  </label>
+                  <input
+                    type="number"
+                    step="any"
+                    min="0"
+                    max="100"
+                    placeholder={getFieldPlaceholder('pucPercentage', 'e.g. 88.0')}
+                    value={pucPercentage}
+                    onChange={(e) => setPucPercentage(e.target.value)}
+                    className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
+                  />
+                </div>
+              )}
                   <label className="block text-xs font-bold text-slate-700 mb-1">
                     12th (PUC / Diploma) Percentage (%)
                   </label>
@@ -817,14 +884,14 @@ export default function StudentApplicationPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4">
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">
-                  Annual Family Income (₹) <span className="text-red-500">*</span>
+                  {getFieldLabel('annualIncome', 'Annual Family Income (₹)')} <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="number"
-                  required
+                  required={isFieldRequired('annualIncome')}
                   min="0"
-                  step="1000"
-                  placeholder="e.g. 60000"
+                  step="any"
+                  placeholder={getFieldPlaceholder('annualIncome', 'e.g. 197690 or 60000')}
                   value={annualIncome}
                   onChange={(e) => setAnnualIncome(e.target.value)}
                   className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
@@ -839,12 +906,13 @@ export default function StudentApplicationPage() {
               {isFieldEnabled('siblingsTotal') && (
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1">
-                    Total Siblings (Brothers/Sisters)
+                    {getFieldLabel('siblingsTotal', 'Total Siblings (Brothers/Sisters)')}
                   </label>
                   <input
                     type="number"
                     min="0"
                     max="10"
+                    placeholder={getFieldPlaceholder('siblingsTotal', '0')}
                     value={siblingsTotal}
                     onChange={(e) => setSiblingsTotal(e.target.value)}
                     className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
@@ -855,12 +923,13 @@ export default function StudentApplicationPage() {
               {isFieldEnabled('siblingsStudying') && (
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1">
-                    Siblings Currently Studying
+                    {getFieldLabel('siblingsStudying', 'Siblings Currently Studying')}
                   </label>
                   <input
                     type="number"
                     min="0"
                     max="10"
+                    placeholder={getFieldPlaceholder('siblingsStudying', '0')}
                     value={siblingsStudying}
                     onChange={(e) => setSiblingsStudying(e.target.value)}
                     className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
@@ -1100,16 +1169,17 @@ export default function StudentApplicationPage() {
                 </label>
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                   <input
-                    type="url"
-                    required
-                    placeholder="https://drive.google.com/drive/folders/YOUR_FOLDER_ID"
+                    type="text"
+                    inputMode="url"
+                    required={isFieldRequired('documentsDriveLink')}
+                    placeholder={getFieldPlaceholder('documentsDriveLink', 'https://drive.google.com/drive/folders/YOUR_FOLDER_ID')}
                     value={documentsDriveLink}
                     onChange={(e) => setDocumentsDriveLink(e.target.value)}
                     className="flex-1 w-full text-sm sm:text-xs font-mono px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] min-h-[42px] transition-colors"
                   />
-                  {documentsDriveLink && documentsDriveLink.startsWith('http') && (
+                  {documentsDriveLink && (documentsDriveLink.startsWith('http') || documentsDriveLink.includes('drive.google.com')) && (
                     <a
-                      href={documentsDriveLink}
+                      href={documentsDriveLink.startsWith('http') ? documentsDriveLink : `https://${documentsDriveLink}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-[#FAF8F5] border border-[#E2D9CE] hover:bg-[#FDF6E7] text-xs font-semibold text-[#7B1436] flex items-center justify-center gap-1.5 transition-colors shadow-2xs flex-shrink-0 min-h-[42px]"
