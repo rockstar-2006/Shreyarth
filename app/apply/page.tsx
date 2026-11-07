@@ -723,21 +723,6 @@ export default function StudentApplicationPage() {
                   />
                 </div>
               )}
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
-                    12th (PUC / Diploma) Percentage (%)
-                  </label>
-                  <input
-                    type="number"
-                    step="0.1"
-                    min="0"
-                    max="100"
-                    placeholder="e.g. 88.0"
-                    value={pucPercentage}
-                    onChange={(e) => setPucPercentage(e.target.value)}
-                    className="w-full text-sm sm:text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7B1436] focus:border-transparent min-h-[42px] sm:min-h-[38px] bg-white transition-colors"
-                  />
-                </div>
-              )}
             </div>
           </div>
 
